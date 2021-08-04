@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TradeServices.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.services</a> &gt; <span class="el_source">TradeServices.java</span></div><h1>TradeServices.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.apache.logging.log4j.LogManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.repositories.TradeRepository;
+
+
+@Service
+<span class="fc" id="L17">public class TradeServices {</span>
+	
+<span class="fc" id="L19">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(TradeServices.class);</span>
+	
+	@Autowired
+	TradeRepository tradeRepository;
+
+	public List&lt;Trade&gt; findAllTrades() {
+<span class="nc" id="L25">		return tradeRepository.findAll();</span>
+	}
+	
+
+	public Trade saveANewTrade(@Valid Trade trade) {
+		
+		
+<span class="nc" id="L32">		return tradeRepository.save(trade);</span>
+		
+	}
+
+
+	public Trade findSpecificTrade(Integer id) {
+<span class="nc" id="L38">		return tradeRepository.findById(id).get();</span>
+
+	}
+
+	public Boolean updateAGivenTrade(@Valid Trade trade) {
+		
+<span class="fc" id="L44">		Optional&lt;Trade&gt; foundItem = tradeRepository.findById(trade.getTradeId());</span>
+		
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+			
+<span class="fc" id="L48">			return false;</span>
+			
+		}else {
+			
+<span class="fc" id="L52">			tradeRepository.save(trade);</span>
+<span class="fc" id="L53">			return true;</span>
+			
+		}
+	}
+
+	public Boolean deleteAGivenTrade(Integer id) {
+		
+<span class="fc" id="L60">		Optional&lt;Trade&gt; foundItem = tradeRepository.findById(id);</span>
+		
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+			
+<span class="fc" id="L64">			return false;</span>
+			
+		}else {
+			
+<span class="fc" id="L68">			tradeRepository.deleteById(id);</span>
+<span class="fc" id="L69">			return true;</span>
+			
+		}
+	}
+
+	
+	public Trade setIfTradeIfASellOrABuy(@Valid Trade trade) {
+		
+		
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if(trade.getBuyIsTrueSellIsFalse()) {</span>
+			
+<span class="nc" id="L80">			trade.setBuyPrice(trade.getPriceFromForm());</span>
+<span class="nc" id="L81">			trade.setBuyQuantity(trade.getQuantityFromForm());</span>
+<span class="nc" id="L82">			logger.info(&quot;======== was in buy&quot;);</span>
+
+			
+<span class="nc" id="L85">		}else {</span>
+			
+<span class="nc" id="L87">			trade.setSellPrice(trade.getPriceFromForm());</span>
+<span class="nc" id="L88">			trade.setSellQuantity(trade.getQuantityFromForm());</span>
+<span class="nc" id="L89">			logger.info(&quot;======== was in sell&quot;);</span>
+		}
+		
+<span class="nc" id="L92">		return trade;</span>
+		
+		
+	}
+
+
+	public void setTradeRepository(TradeRepository tradeRepository) {
+<span class="fc" id="L99">		this.tradeRepository = tradeRepository;</span>
+<span class="fc" id="L100">	}</span>
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

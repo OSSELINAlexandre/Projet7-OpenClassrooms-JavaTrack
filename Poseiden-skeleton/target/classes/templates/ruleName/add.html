@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Home</title>
+<link rel="stylesheet" href="/css/bootstrap.css" >
+</head>
+<body>
+<div class="container">
+
+	<div class="row">
+		<h2>Add New Rule</h2>
+	</div>
+
+	<div class="row">
+		<form action="#" th:action="@{/ruleName/validate}" th:object="${ruleName}" method="post" class="form-horizontal" style="width: 100%">
+
+			<h4 class="mt-3">Name</h4>
+			<input class ="w-100" type="text" th:field="*{name}"></input>
+			<span class="text-danger"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+			
+			
+			<h4 class="mt-3">Description</h4>
+			<input class ="w-100" type="text" th:field="*{description}" ></input>
+			<span class="text-danger"  th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+			
+			
+			<h4 class="mt-3">json</h4>
+			<input class ="w-100" type="text" th:field="*{json}"></input>
+			<span class="text-danger"  th:if="${#fields.hasErrors('json')}" th:errors="*{json}"></span>
+			
+			<h4 class="mt-3">template</h4>
+			<input class ="w-100" type="text" th:field="*{template}"></input>
+			<span class="text-danger"  th:if="${#fields.hasErrors('template')}" th:errors="*{template}"></span>
+			
+			<h4 class="mt-3">sql</h4>
+			<input class ="w-100" type="text" th:field="*{sqlStr}"></input>
+			<span class="text-danger"  th:if="${#fields.hasErrors('sqlStr')}" th:errors="*{sqlStr}"></span>
+			
+			<h4 class="mt-3">sqlPart</h4>
+			<input class ="w-100" type="text" th:field="*{sqlPart}"></input>
+			<span class="text-danger"  th:if="${#fields.hasErrors('sqlPart')}" th:errors="*{sqlPart}"></span>
+			
+			
+			<div class="mt-4">
+				<a th:href="@{/ruleName/list}" class="btn btn-danger ml-3">Cancel</a>
+				<button class="btn btn-primary">Add rating</button>
+			</div>
+
+
+		</form>
+	</div>
+
+</div>
+</body>
+</html>
+

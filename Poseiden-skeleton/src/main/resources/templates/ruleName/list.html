@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Home</title>
-<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+<link rel="stylesheet" href="/css/bootstrap.css" >
 </head>
 <body>
 <div class="container">
@@ -18,14 +18,15 @@
 		</div>
 		<div class="col-6 text-right">
 			Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
-			<form th:action="@{/app-logout}" method="POST">
+			<form th:action="@{/logout}" method="POST">
 				<input type="submit" value="Logout"/>
 			</form>
 		</div>
 	</div>
 	<div class="row"><h2>Rule List</h2></div>
-	<div class="row">
 		<a href="/ruleName/add" class="btn btn-primary btn-sm">Add New</a>
+
+	<div class="row">
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -40,7 +41,22 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all RuleName to the table, the Action column will have Edit & Delete buttons -->
+				<!-- TODO: Show all Bids to the table, the Action column will have Edit & Delete buttons -->
+				<tr th:each="rule : ${listAllRules}">
+				<td th:text="${rule.id}"></td>
+				<td th:text="${rule.name}"></td>
+				<td th:text="${rule.description}"></td>
+				<td th:text="${rule.json}"></td>
+				<td th:text="${rule.template}"></td>
+				<td th:text="${rule.sqlStr}"></td>
+				<td th:text="${rule.sqlPart}"></td>
+				<td class="d-flex">
+					<a th:href="@{/ruleName/update/{id}(id=${rule.id})}" >Edit</a>
+					<p>&nbsp;|&nbsp;</p>
+					<a th:href="@{/ruleName/delete/{id}(id=${rule.id})}">Delete</a>
+				</td>
+				</tr>
+
 			</tbody>
 		</table>
 	</div>

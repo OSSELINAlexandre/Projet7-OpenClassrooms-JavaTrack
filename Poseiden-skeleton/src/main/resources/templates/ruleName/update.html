@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Home</title>
-	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+<link rel="stylesheet" href="/css/bootstrap.css" >
 </head>
 <body>
 <div class="container">
@@ -14,12 +14,23 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/ruleName/update/{id}(id=${ruleName.id})}" th:object="${ruleName}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to edit the values of RuleName, there are 2 buttons: Update data and Cancel to the RuleName
-			 -->
-
-		</form>
+		<form action="#" th:action="@{/ruleName/update/{id}(id=${RuleToUpdate.id})}" th:object="${RuleToUpdate}" method="post" class="form-horizontal" style="width: 100%">
+			<h4 class="mt-3">Name</h4>
+			<input class ="w-100" type="text" text="${RuleToUpdate.name}" th:field="*{name}" required></input>
+			<h4 class="mt-3">Description</h4>
+			<input class ="w-100" type="text" text="${RuleToUpdate.description}" th:field="*{description}" required></input>
+			<h4 class="mt-3">json</h4>
+			<input class ="w-100" type="text" text="${RuleToUpdate.json}" th:field="*{json}" required></input>
+			<h4 class="mt-3">template</h4>
+			<input class ="w-100" type="text" text="${RuleToUpdate.template}" th:field="*{template}" required></input>
+			<h4 class="mt-3">sql</h4>
+			<input class ="w-100" type="text" text="${RuleToUpdate.sqlStr}" th:field="*{sqlStr}" required></input>
+			<h4 class="mt-3">sqlPart</h4>
+			<input class ="w-100" type="text" text="${RuleToUpdate.sqlPart}" th:field="*{sqlPart}" required></input>	
+			<div class="mt-4">
+				<a th:href="@{/bidList/list}" class="btn btn-danger ml-3">Cancel</a>
+				<button type="submit" class="btn btn-primary">update BidList</button>
+			</div>
 	</div>
 
 </div>

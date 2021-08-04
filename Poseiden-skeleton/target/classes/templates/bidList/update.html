@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Home</title>
+<link rel="stylesheet" href="/css/bootstrap.css" >
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<h2>Update Bid</h2>
+	</div>
+
+	<div class="row">
+		<form action="#" th:action="@{/bidList/update/{id}(id=${bidListToUpdate.bidlistid})}" th:object="${bidListToUpdate}" method="post" class="form-horizontal" style="width: 100%">
+			<h4 class="mt-3">Account</h4>
+			<input class ="w-100" type="text" text="${bidListToUpdate.account}" th:field="*{account}" required></input>
+			<h4 class="mt-3">Term</h4>
+			<input class ="w-100" type="text" text="${bidListToUpdate.type}" th:field="*{type}" required></input>
+			<h4 class="mt-3">Value</h4>
+			<input class ="w-100" type="number" text="${bidListToUpdate.bidQuantity}" th:field="*{bidQuantity}" required></input>
+
+			<div class="mt-4">
+				<a th:href="@{/bidList/list}" class="btn btn-danger ml-3">Cancel</a>
+				<button type="submit" class="btn btn-primary">update BidList</button>
+			</div>
+		</form>
+	</div>
+
+</div>
+</body>
+</html>

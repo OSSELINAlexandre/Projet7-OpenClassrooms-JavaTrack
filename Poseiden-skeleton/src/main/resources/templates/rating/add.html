@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Home</title>
-<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+<link rel="stylesheet" href="/css/bootstrap.css" >
 </head>
 <body>
 <div class="container">
@@ -15,9 +15,21 @@
 
 	<div class="row">
 		<form action="#" th:action="@{/rating/validate}" th:object="${rating}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to input the values of Rating, there are 2 buttons: Save data and Cancel to the list Rating
-			 -->
+
+			<h4 class="mt-3" >Moody's rating</h4>
+			<input class ="w-100" type="text" th:field="*{moodysRating}"></input>
+			<h4 class="mt-3">Standard's & Poor's rating</h4>
+			<input class ="w-100" type="text" th:field="*{sandpRating}"></input>
+			<h4 class="mt-3">Fitch's rating</h4>
+			<input class ="w-100" type="text" th:field="*{fitchRating}"></input>
+			<h4 class="mt-3">Order Number </h4>
+			<input class ="w-100" type="number" th:field="*{orderNumber}"></input>
+
+			<div class="mt-4">
+				<a th:href="@{/rating/list}" class="btn btn-danger ml-3">Cancel</a>
+				<button type="submit" class="btn btn-primary">Add rating</button>
+			</div>
+
 
 		</form>
 	</div>

@@ -1,0 +1,12 @@
+com\nnk\springboot\testservices\UserServicesTests.class
+com\nnk\springboot\testrepoanddomain\PasswordEncodeTest.class
+com\nnk\springboot\testrepoanddomain\TradeTests.class
+com\nnk\springboot\testservices\CurvePointServicesTests.class
+com\nnk\springboot\testrepoanddomain\BidTests.class
+com\nnk\springboot\testservices\RatingServicesTests.class
+com\nnk\springboot\testservices\RuleNameServicesTests.class
+com\nnk\springboot\testrepoanddomain\RatingTests.class
+com\nnk\springboot\testrepoanddomain\RuleTests.class
+com\nnk\springboot\testservices\BidListServicesTests.class
+com\nnk\springboot\testservices\TradeServicesTests.class
+com\nnk\springboot\testrepoanddomain\CurvePointTests.class

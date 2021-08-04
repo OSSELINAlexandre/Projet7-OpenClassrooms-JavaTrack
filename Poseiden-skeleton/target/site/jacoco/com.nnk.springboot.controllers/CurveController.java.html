@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurveController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.controllers</a> &gt; <span class="el_source">CurveController.java</span></div><h1>CurveController.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.controllers;
+
+import com.nnk.springboot.domain.CurvePoint;
+import com.nnk.springboot.services.CurvePointServices;
+
+import org.apache.logging.log4j.LogManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+
+@Controller
+<span class="fc" id="L19">public class CurveController {</span>
+
+<span class="fc" id="L21">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(CurveController.class);</span>
+
+	@Autowired
+	CurvePointServices curvePointServices;
+
+	@RequestMapping(&quot;/curvePoint/list&quot;)
+	public String home(Model model) {
+<span class="fc" id="L28">		model.addAttribute(&quot;listAllCurvePoint&quot;, curvePointServices.findAllCurvePoints());</span>
+
+<span class="fc" id="L30">		return &quot;curvePoint/list&quot;;</span>
+	}
+
+	@GetMapping(&quot;/curvePoint/add&quot;)
+	public String addCurveForm(CurvePoint bid) {
+<span class="fc" id="L35">		return &quot;curvePoint/add&quot;;</span>
+	}
+
+	@PostMapping(&quot;/curvePoint/validate&quot;)
+	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
+
+<span class="fc bfc" id="L41" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+
+<span class="fc" id="L43">			return &quot;redirect:/curvePoint/add&quot;;</span>
+
+		}
+
+<span class="fc" id="L47">		curvePointServices.saveANewCurvedPoint(curvePoint);</span>
+
+<span class="fc" id="L49">		return &quot;redirect:/curvePoint/list&quot;;</span>
+	}
+
+	@GetMapping(&quot;/curvePoint/update/{id}&quot;)
+	public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+
+<span class="fc" id="L55">		logger.info(&quot;=========== WTC =============&quot; + id);</span>
+<span class="fc" id="L56">		model.addAttribute(&quot;curvePointToUpdate&quot;, curvePointServices.findSpecificCurvePoint(id));</span>
+
+<span class="fc" id="L58">		return &quot;curvePoint/update&quot;;</span>
+	}
+
+	@PostMapping(&quot;/curvePoint/update/{id}&quot;)
+	public String updateCurve(@PathVariable(&quot;id&quot;) Integer id, @Valid CurvePoint curvePoint, BindingResult result,
+			Model model) {
+
+<span class="fc" id="L65">		curvePoint.setId(id);</span>
+
+<span class="fc" id="L67">		Boolean updateCurvePoint = curvePointServices.updateAGivenCurvePoint(curvePoint);</span>
+
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (updateCurvePoint == true) {</span>
+
+<span class="fc" id="L71">			return &quot;redirect:/curvePoint/list&quot;;</span>
+
+		} else {
+
+<span class="nc" id="L75">			model.addAttribute(&quot;couldNotUpdate&quot;, true);</span>
+<span class="nc" id="L76">			return &quot;redirect:/curvePoint/list&quot;;</span>
+
+		}
+
+	}
+
+	@GetMapping(&quot;/curvePoint/delete/{id}&quot;)
+	public String deleteCurve(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+
+<span class="fc" id="L85">		curvePointServices.deleteAGivenCurvePoint(id);</span>
+
+<span class="fc" id="L87">		return &quot;redirect:/curvePoint/list&quot;;</span>
+
+	}
+
+	public void setCurvePointServices(CurvePointServices curvePointServices) {
+<span class="fc" id="L92">		this.curvePointServices = curvePointServices;</span>
+<span class="fc" id="L93">	}</span>
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BidListServices.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.services</a> &gt; <span class="el_source">BidListServices.java</span></div><h1>BidListServices.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.apache.logging.log4j.LogManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.nnk.springboot.controllers.BidListController;
+import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.repositories.BidListRepository;
+
+import ch.qos.logback.classic.Logger;
+
+@Service
+<span class="fc" id="L19">public class BidListServices {</span>
+	
+	
+<span class="fc" id="L22">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(BidListServices.class);</span>
+
+	
+	@Autowired
+	BidListRepository bidListRepository;
+
+	public List&lt;BidList&gt; findAllBids() {
+		
+<span class="nc" id="L30">		return bidListRepository.findAll();</span>
+	}
+
+	public BidList saveANewBid(@Valid BidList bid) {
+		
+<span class="nc" id="L35">		return bidListRepository.save(bid);</span>
+		
+	}
+
+	public Boolean deleteAGivenBid(Integer id) {
+		
+<span class="fc" id="L41">		Optional&lt;BidList&gt; foundItem = bidListRepository.findById(id);</span>
+		
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+			
+<span class="fc" id="L45">			return false;</span>
+			
+		}else {
+			
+<span class="fc" id="L49">			bidListRepository.deleteById(id);</span>
+<span class="fc" id="L50">			return true;</span>
+			
+		}
+		
+	}
+	
+	
+
+	public Boolean updateAGivenBid(@Valid BidList bidList) {
+		
+<span class="fc" id="L60">		Optional&lt;BidList&gt; foundItem = bidListRepository.findById(bidList.getBidlistid());</span>
+		
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+			
+<span class="fc" id="L64">			return false;</span>
+			
+		}else {
+			
+<span class="fc" id="L68">			bidListRepository.save(bidList);</span>
+//			logger.info(&quot;=====|||||====&quot; + test.getBidlistid() + &quot;'''''' ''' &quot; + test.getBidQuantity());
+<span class="fc" id="L70">			return true;</span>
+			
+		}
+	}
+
+	public BidList findSpecificBid(Integer id) {
+<span class="nc" id="L76">		return bidListRepository.findById(id).get();</span>
+	}
+	
+	//
+	//
+	// Setters present solely for testing purposes, can be deleted afterwards.
+	//
+	//
+	
+	
+
+	public void setBidListRepository(BidListRepository bidListRepository) {
+<span class="fc" id="L88">		this.bidListRepository = bidListRepository;</span>
+<span class="fc" id="L89">	}</span>
+	
+
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
