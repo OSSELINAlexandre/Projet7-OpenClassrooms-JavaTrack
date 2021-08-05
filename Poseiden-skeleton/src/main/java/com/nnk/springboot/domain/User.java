@@ -6,7 +6,6 @@ import java.util.Collection;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "users")
 public class User implements Serializable, UserDetails {
-	
 	
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -36,6 +34,7 @@ public class User implements Serializable, UserDetails {
     @NotBlank(message = "Role is mandatory")
 	@Column(name = "role")
     private String role;
+    
     
     
     public User() {

@@ -75,21 +75,21 @@ import com.nnk.springboot.repositories.TradeRepository;
 	public Trade setIfTradeIfASellOrABuy(@Valid Trade trade) {
 		
 		
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if(trade.getBuyIsTrueSellIsFalse()) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if(trade.getBuyIsTrueSellIsFalse()) {</span>
 			
-<span class="nc" id="L80">			trade.setBuyPrice(trade.getPriceFromForm());</span>
-<span class="nc" id="L81">			trade.setBuyQuantity(trade.getQuantityFromForm());</span>
-<span class="nc" id="L82">			logger.info(&quot;======== was in buy&quot;);</span>
+<span class="fc" id="L80">			trade.setBuyPrice(trade.getPriceFromForm());</span>
+<span class="fc" id="L81">			trade.setBuyQuantity(trade.getQuantityFromForm());</span>
+<span class="fc" id="L82">			logger.info(&quot;======== was in buy&quot;);</span>
 
 			
-<span class="nc" id="L85">		}else {</span>
+<span class="fc" id="L85">		}else {</span>
 			
-<span class="nc" id="L87">			trade.setSellPrice(trade.getPriceFromForm());</span>
-<span class="nc" id="L88">			trade.setSellQuantity(trade.getQuantityFromForm());</span>
-<span class="nc" id="L89">			logger.info(&quot;======== was in sell&quot;);</span>
+<span class="fc" id="L87">			trade.setSellPrice(trade.getPriceFromForm());</span>
+<span class="fc" id="L88">			trade.setSellQuantity(trade.getQuantityFromForm());</span>
+<span class="fc" id="L89">			logger.info(&quot;======== was in sell&quot;);</span>
 		}
 		
-<span class="nc" id="L92">		return trade;</span>
+<span class="fc" id="L92">		return trade;</span>
 		
 		
 	}

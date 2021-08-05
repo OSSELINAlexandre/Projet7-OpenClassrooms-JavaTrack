@@ -1,10 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.services.UserServices;
-
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,12 +17,12 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
 	
-	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(UserController.class);
 
 
 	@Autowired
 	private UserServices userServices;
-
+	
+	// READ
 	@RequestMapping("/user/list")
 	public String home(Model model) {
 		
@@ -39,6 +36,7 @@ public class UserController {
 		return "user/add";
 	}
 
+	// CREATE
 	@PostMapping("/user/validate")
 	public String validate(@Valid User user, BindingResult result, Model model) {
 
@@ -56,6 +54,7 @@ public class UserController {
 
 	}
 
+	// READ
 	@GetMapping("/user/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 
@@ -64,6 +63,7 @@ public class UserController {
 		return "user/update";
 	}
 
+	// UPDATE
 	@PostMapping("/user/update/{id}")
     public String updateUser(@PathVariable("id") Integer id, @Valid User user,
                              BindingResult result, Model model) {
@@ -75,6 +75,7 @@ public class UserController {
 	
     }
 
+	// DELETE
 	@GetMapping("/user/delete/{id}")
 	public String deleteUser(@PathVariable("id") Integer id, Model model) {
 		
@@ -84,6 +85,9 @@ public class UserController {
 		return "redirect:/user/list";
 	}
 
+	
+	// SETTER solely needed for testing purposes, can be deleted without incident on
+	// code.
 	public void setUserServices(UserServices userServices) {
 		this.userServices = userServices;
 	}

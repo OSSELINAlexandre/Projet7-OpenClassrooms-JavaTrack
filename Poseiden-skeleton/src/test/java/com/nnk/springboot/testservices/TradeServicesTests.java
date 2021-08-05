@@ -8,16 +8,12 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.repositories.TradeRepository;
-import com.nnk.springboot.services.BidListServices;
 import com.nnk.springboot.services.TradeServices;
 
 @RunWith(SpringRunner.class)
@@ -109,6 +105,35 @@ public class TradeServicesTests {
 		Boolean actual = tradeServices.deleteAGivenTrade(5);
 		
 		assertTrue(actual == false);
+		
+	}
+	
+	@Test
+	public void test_setIfTradeIfASellOrABuy_SellSide() {
+		
+		Trade testItem = new Trade();
+		testItem.setBuyIsTrueSellIsFalse(true);
+		testItem.setQuantityFromForm(77.77);
+		testItem.setPriceFromForm(77.77);
+		
+		Trade actual = tradeServices.setIfTradeIfASellOrABuy(testItem);
+
+		assertTrue(actual.getBuyPrice() == 77.77 && actual.getBuyQuantity() == 77.77);
+		
+	}
+	
+	@Test
+	public void test_setIfTradeIfASellOrABuy_BuySide() {
+		
+		Trade testItem = new Trade();
+		testItem.setBuyIsTrueSellIsFalse(false);
+		testItem.setQuantityFromForm(77.77);
+		testItem.setPriceFromForm(77.77);
+		
+		
+		Trade actual = tradeServices.setIfTradeIfASellOrABuy(testItem);
+		
+		assertTrue(actual.getSellPrice() == 77.77 && actual.getSellQuantity() == 77.77);
 		
 	}
 }

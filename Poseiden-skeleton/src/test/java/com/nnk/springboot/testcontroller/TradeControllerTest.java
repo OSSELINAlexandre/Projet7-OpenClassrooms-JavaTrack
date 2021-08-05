@@ -83,7 +83,7 @@ public class TradeControllerTest {
 		
 		String actual = tradeController.validate(new Trade(), bidingResult, model);
 		
-		assertTrue(actual.equals("redirect:/trade/add"));
+		assertTrue(actual.equals("trade/add"));
 		
 	}
 	

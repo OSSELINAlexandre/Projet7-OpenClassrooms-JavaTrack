@@ -1,9 +1,8 @@
 package com.nnk.springboot.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "rating")
@@ -24,6 +23,8 @@ public class Rating {
 	@Column(name = "fitchrating")
 	private String fitchRating;
 
+	@Min(value= 1 , message ="must not be null")
+	@Max(value=127, message ="cannot be above 127 for orderNumber")
 	@Column(name = "ordernumber")
 	private int orderNumber;
 

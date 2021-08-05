@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
 
 import com.nnk.springboot.controllers.HomeController;
-import com.nnk.springboot.controllers.RatingController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

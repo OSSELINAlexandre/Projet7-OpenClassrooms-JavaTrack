@@ -8,16 +8,12 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.RuleName;
-import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.repositories.RuleNameRepository;
-import com.nnk.springboot.services.BidListServices;
 import com.nnk.springboot.services.RuleNameServices;
 
 @RunWith(SpringRunner.class)
@@ -31,7 +27,6 @@ public class RuleNameServicesTests {
 
 	private RuleNameServices ruleNameServices;
 	
-	private RuleName testingItem;
 	
 	@Before()
 	public void init() {

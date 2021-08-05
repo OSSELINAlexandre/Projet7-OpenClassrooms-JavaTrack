@@ -3,7 +3,6 @@
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.services.RatingServices;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,87 +12,87 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 import javax.validation.Valid;
 
 @Controller
 <span class="fc" id="L19">public class RatingController {</span>
 
-<span class="fc" id="L21">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(RatingController.class);</span>
 
+	
 	@Autowired
 	RatingServices ratingServices;
 
+	
+	//READ
 	@RequestMapping(&quot;/rating/list&quot;)
 	public String home(Model model) {
 
-<span class="fc" id="L29">		model.addAttribute(&quot;listAllRating&quot;, ratingServices.findAllRatings());</span>
+<span class="fc" id="L31">		model.addAttribute(&quot;listAllRating&quot;, ratingServices.findAllRatings());</span>
 
-<span class="fc" id="L31">		return &quot;rating/list&quot;;</span>
+<span class="fc" id="L33">		return &quot;rating/list&quot;;</span>
 	}
 
 	@GetMapping(&quot;/rating/add&quot;)
 	public String addRatingForm(Rating rating) {
-<span class="fc" id="L36">		return &quot;rating/add&quot;;</span>
+<span class="fc" id="L38">		return &quot;rating/add&quot;;</span>
 	}
-
+	
+    //CREATE
 	@PostMapping(&quot;/rating/validate&quot;)
 	public String validate(@Valid Rating rating, BindingResult result, Model model) {
 
-<span class="fc bfc" id="L42" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
 
-<span class="fc" id="L44">			return &quot;redirect:/rating/add&quot;;</span>
+<span class="fc" id="L47">			return &quot;rating/add&quot;;</span>
 
 		}
 
-<span class="fc" id="L48">		ratingServices.saveANewRating(rating);</span>
+		
+<span class="fc" id="L52">		ratingServices.saveANewRating(rating);</span>
 
-<span class="fc" id="L50">		return &quot;redirect:/rating/list&quot;;</span>
+<span class="fc" id="L54">		return &quot;redirect:/rating/list&quot;;</span>
 	}
 
+    //READ
 	@GetMapping(&quot;/rating/update/{id}&quot;)
 
 	public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 
-<span class="fc" id="L57">		logger.info(&quot;=========== WTC =============&quot; + id);</span>
 
-<span class="fc" id="L59">		model.addAttribute(&quot;ratingToUpdate&quot;, ratingServices.findSpecificRating(id));</span>
-
-<span class="fc" id="L61">		return &quot;rating/update&quot;;</span>
+<span class="fc" id="L63">		model.addAttribute(&quot;ratingToUpdate&quot;, ratingServices.findSpecificRating(id));</span>
+		
+<span class="fc" id="L65">		return &quot;rating/update&quot;;</span>
+		
 	}
 
+    //UPDATE
 	@PostMapping(&quot;/rating/update/{id}&quot;)
 	public String updateRating(@PathVariable(&quot;id&quot;) Integer id, @Valid Rating rating, BindingResult result,
 			Model model) {
 
-<span class="fc" id="L68">		rating.setId(id);</span>
+<span class="fc" id="L74">		rating.setId(id);</span>
+<span class="fc" id="L75">		ratingServices.updateAGivenRating(rating);</span>
+<span class="fc" id="L76">		return &quot;redirect:/rating/list&quot;;</span>
 
-<span class="fc" id="L70">		Boolean updateCurvePoint = ratingServices.updateAGivenRating(rating);</span>
-
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (updateCurvePoint == true) {</span>
-
-<span class="fc" id="L74">			return &quot;redirect:/rating/list&quot;;</span>
-
-		} else {
-
-<span class="nc" id="L78">			model.addAttribute(&quot;couldNotUpdate&quot;, true);</span>
-<span class="nc" id="L79">			return &quot;redirect:/rating/list&quot;;</span>
-
-		}
 
 	}
 
+    //DELETE
 	@GetMapping(&quot;/rating/delete/{id}&quot;)
 	public String deleteRating(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 
-<span class="fc" id="L88">		ratingServices.deleteAGivenRating(id);</span>
+<span class="fc" id="L85">		ratingServices.deleteAGivenRating(id);</span>
 
-<span class="fc" id="L90">		return &quot;redirect:/rating/list&quot;;</span>
+<span class="fc" id="L87">		return &quot;redirect:/rating/list&quot;;</span>
 
 	}
+	
+    //SETTER solely needed for testing purposes, can be deleted without incident on code.
 
 	public void setRatingServices(RatingServices ratingServices) {
-<span class="fc" id="L95">		this.ratingServices = ratingServices;</span>
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L94">		this.ratingServices = ratingServices;</span>
+<span class="fc" id="L95">	}</span>
 	
 	
 	

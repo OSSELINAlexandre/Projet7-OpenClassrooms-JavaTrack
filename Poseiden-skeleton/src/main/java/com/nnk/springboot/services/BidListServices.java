@@ -5,21 +5,16 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nnk.springboot.controllers.BidListController;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
-
-import ch.qos.logback.classic.Logger;
 
 @Service
 public class BidListServices {
 	
 	
-	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(BidListServices.class);
 
 	
 	@Autowired

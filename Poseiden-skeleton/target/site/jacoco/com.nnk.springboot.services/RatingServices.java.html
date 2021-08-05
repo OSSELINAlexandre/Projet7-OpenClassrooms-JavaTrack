@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +12,9 @@ import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
 
 @Service
-<span class="fc" id="L16">public class RatingServices {</span>
+<span class="fc" id="L15">public class RatingServices {</span>
 	
 	
-<span class="fc" id="L19">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(CurvePointServices.class);</span>
 	
 	@Autowired
 	RatingRepository ratingRepository;
@@ -25,53 +23,53 @@ import com.nnk.springboot.repositories.RatingRepository;
 	
 	public List&lt;Rating&gt; findAllRatings() {
 
-<span class="nc" id="L28">		return ratingRepository.findAll();</span>
+<span class="nc" id="L26">		return ratingRepository.findAll();</span>
 	}
 
 	public Rating saveANewRating(@Valid Rating rating) {
 
-<span class="nc" id="L33">		return ratingRepository.save(rating);</span>
+<span class="nc" id="L31">		return ratingRepository.save(rating);</span>
 	}
 
 	public Rating findSpecificRating(Integer id) {
-<span class="nc" id="L37">		return ratingRepository.findById(id).get();</span>
+<span class="nc" id="L35">		return ratingRepository.findById(id).get();</span>
 	}
 
 	public Boolean updateAGivenRating(@Valid Rating rating) {
 		
-<span class="fc" id="L42">		Optional&lt;Rating&gt; foundItem = ratingRepository.findById(rating.getId());</span>
+<span class="fc" id="L40">		Optional&lt;Rating&gt; foundItem = ratingRepository.findById(rating.getId());</span>
 		
-<span class="fc bfc" id="L44" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
 			
-<span class="fc" id="L46">			return false;</span>
+<span class="fc" id="L44">			return false;</span>
 			
 		}else {
 			
-<span class="fc" id="L50">			ratingRepository.save(rating);</span>
-<span class="fc" id="L51">			return true;</span>
+<span class="fc" id="L48">			ratingRepository.save(rating);</span>
+<span class="fc" id="L49">			return true;</span>
 			
 		}
 	}
 
 	public Boolean deleteAGivenRating(Integer id) {
 
-<span class="fc" id="L58">		Optional&lt;Rating&gt; foundItem = ratingRepository.findById(id);</span>
+<span class="fc" id="L56">		Optional&lt;Rating&gt; foundItem = ratingRepository.findById(id);</span>
 		
-<span class="fc bfc" id="L60" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
 			
-<span class="fc" id="L62">			return false;</span>
+<span class="fc" id="L60">			return false;</span>
 			
 		}else {
 			
-<span class="fc" id="L66">			ratingRepository.deleteById(id);</span>
-<span class="fc" id="L67">			return true;</span>
+<span class="fc" id="L64">			ratingRepository.deleteById(id);</span>
+<span class="fc" id="L65">			return true;</span>
 			
 		}
 	}
 
 	public void setRatingRepository(RatingRepository ratingRepository) {
-<span class="fc" id="L73">		this.ratingRepository = ratingRepository;</span>
-<span class="fc" id="L74">	}</span>
+<span class="fc" id="L71">		this.ratingRepository = ratingRepository;</span>
+<span class="fc" id="L72">	}</span>
 	
 	
 	

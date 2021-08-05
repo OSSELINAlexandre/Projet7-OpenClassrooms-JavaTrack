@@ -8,16 +8,12 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.repositories.CurvePointRepository;
-import com.nnk.springboot.services.BidListServices;
 import com.nnk.springboot.services.CurvePointServices;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +28,7 @@ public class CurvePointServicesTests {
 
 	private CurvePointServices curvePointServices;
 	
-	private CurvePoint testingItem;
+
 	
 	@Before()
 	public void init() {

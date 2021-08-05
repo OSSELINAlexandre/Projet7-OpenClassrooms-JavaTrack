@@ -9,15 +9,13 @@ import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nnk.springboot.controllers.RuleNameController;
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RuleNameRepository;
 
 @Service
-<span class="fc" id="L18">public class RuleNameServices {</span>
+<span class="fc" id="L16">public class RuleNameServices {</span>
 	
-<span class="fc" id="L20">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(RuleNameServices.class);</span>
+<span class="fc" id="L18">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(RuleNameServices.class);</span>
 
 	
 	@Autowired
@@ -26,56 +24,56 @@ import com.nnk.springboot.repositories.RuleNameRepository;
 	public List&lt;RuleName&gt; findAllRules() {
 		
 		
-<span class="nc" id="L29">		return ruleNameRepository.findAll();</span>
+<span class="nc" id="L27">		return ruleNameRepository.findAll();</span>
 	}
 
 	public RuleName saveANewRule(@Valid RuleName ruleName) {
 		
-<span class="nc" id="L34">		return ruleNameRepository.save(ruleName);</span>
+<span class="nc" id="L32">		return ruleNameRepository.save(ruleName);</span>
 	}
 
 
 	public Boolean deleteAGivenRule(Integer id) {
 		
-<span class="fc" id="L40">		Optional&lt;RuleName&gt;  foundItem = ruleNameRepository.findById(id);</span>
+<span class="fc" id="L38">		Optional&lt;RuleName&gt;  foundItem = ruleNameRepository.findById(id);</span>
 		
-<span class="fc bfc" id="L42" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
 			
-<span class="fc" id="L44">			return false;</span>
+<span class="fc" id="L42">			return false;</span>
 			
 		}else {
 			
-<span class="fc" id="L48">			ruleNameRepository.deleteById(id);</span>
-<span class="fc" id="L49">			return true;</span>
+<span class="fc" id="L46">			ruleNameRepository.deleteById(id);</span>
+<span class="fc" id="L47">			return true;</span>
 			
 		}
 	}
 	
 	public Boolean updateAGivenRule(@Valid RuleName ruleName) {
 		
-<span class="fc" id="L56">		Optional&lt;RuleName&gt; foundItem = ruleNameRepository.findById(ruleName.getId());</span>
+<span class="fc" id="L54">		Optional&lt;RuleName&gt; foundItem = ruleNameRepository.findById(ruleName.getId());</span>
 		
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
 			
-<span class="fc" id="L60">			return false;</span>
+<span class="fc" id="L58">			return false;</span>
 			
 		}else {
 			
-<span class="fc" id="L64">			ruleNameRepository.save(ruleName);</span>
-<span class="fc" id="L65">			logger.info(&quot;=====|||||====&quot; + foundItem.get().getId());</span>
-<span class="fc" id="L66">			return true;</span>
+<span class="fc" id="L62">			ruleNameRepository.save(ruleName);</span>
+<span class="fc" id="L63">			logger.info(&quot;=====|||||====&quot; + foundItem.get().getId());</span>
+<span class="fc" id="L64">			return true;</span>
 			
 		}
 	}
 	
 	
 	public RuleName findSpecificRule(Integer id) {
-<span class="nc" id="L73">		return ruleNameRepository.findById(id).get();</span>
+<span class="nc" id="L71">		return ruleNameRepository.findById(id).get();</span>
 	}
 
 	public void setRuleNameRepository(RuleNameRepository ruleNameRepository) {
-<span class="fc" id="L77">		this.ruleNameRepository = ruleNameRepository;</span>
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L75">		this.ruleNameRepository = ruleNameRepository;</span>
+<span class="fc" id="L76">	}</span>
 
 	
 	

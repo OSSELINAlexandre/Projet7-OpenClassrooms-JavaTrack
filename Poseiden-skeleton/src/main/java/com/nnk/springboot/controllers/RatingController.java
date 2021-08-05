@@ -3,7 +3,6 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.services.RatingServices;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,16 +12,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 import javax.validation.Valid;
 
 @Controller
 public class RatingController {
 
-	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(RatingController.class);
 
+	
 	@Autowired
 	RatingServices ratingServices;
 
+	
+	//READ
 	@RequestMapping("/rating/list")
 	public String home(Model model) {
 
@@ -35,53 +37,48 @@ public class RatingController {
 	public String addRatingForm(Rating rating) {
 		return "rating/add";
 	}
-
+	
+    //CREATE
 	@PostMapping("/rating/validate")
 	public String validate(@Valid Rating rating, BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
 
-			return "redirect:/rating/add";
+			return "rating/add";
 
 		}
 
+		
 		ratingServices.saveANewRating(rating);
 
 		return "redirect:/rating/list";
 	}
 
+    //READ
 	@GetMapping("/rating/update/{id}")
 
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 
-		logger.info("=========== WTC =============" + id);
 
 		model.addAttribute("ratingToUpdate", ratingServices.findSpecificRating(id));
-
+		
 		return "rating/update";
+		
 	}
 
+    //UPDATE
 	@PostMapping("/rating/update/{id}")
 	public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating, BindingResult result,
 			Model model) {
 
 		rating.setId(id);
+		ratingServices.updateAGivenRating(rating);
+		return "redirect:/rating/list";
 
-		Boolean updateCurvePoint = ratingServices.updateAGivenRating(rating);
-
-		if (updateCurvePoint == true) {
-
-			return "redirect:/rating/list";
-
-		} else {
-
-			model.addAttribute("couldNotUpdate", true);
-			return "redirect:/rating/list";
-
-		}
 
 	}
 
+    //DELETE
 	@GetMapping("/rating/delete/{id}")
 	public String deleteRating(@PathVariable("id") Integer id, Model model) {
 
@@ -90,6 +87,8 @@ public class RatingController {
 		return "redirect:/rating/list";
 
 	}
+	
+    //SETTER solely needed for testing purposes, can be deleted without incident on code.
 
 	public void setRatingServices(RatingServices ratingServices) {
 		this.ratingServices = ratingServices;

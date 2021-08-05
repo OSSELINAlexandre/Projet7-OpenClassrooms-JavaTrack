@@ -14,11 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import com.nnk.springboot.controllers.BidListController;
 import com.nnk.springboot.controllers.RatingController;
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.services.BidListServices;
 import com.nnk.springboot.services.RatingServices;
 
 @RunWith(SpringRunner.class)
@@ -86,7 +83,7 @@ public class RatingControllerTests {
 		
 		String actual = ratingController.validate(new Rating(), bidingResult, model);
 		
-		assertTrue(actual.equals("redirect:/rating/add"));
+		assertTrue(actual.equals("rating/add"));
 		
 	}
 	

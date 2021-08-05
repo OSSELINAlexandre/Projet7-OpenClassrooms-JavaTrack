@@ -5,6 +5,8 @@
 <meta charset="utf-8"/>
 <title>Home</title>
 <link rel="stylesheet" href="/css/bootstrap.css" >
+<link rel="stylesheet" href="/css/logoProp.css">
+
 </head>
 <body>
 <div class="container">
@@ -23,7 +25,8 @@
 			<h4 class="mt-3">Fitch's rating</h4>
 			<input class ="w-100" type="text" th:field="*{fitchRating}"></input>
 			<h4 class="mt-3">Order Number </h4>
-			<input class ="w-100" type="number" th:field="*{orderNumber}"></input>
+			<input class ="w-100" type="number" th:field="*{orderNumber}" required></input>
+			<span class="text-danger"  th:if="${#fields.hasErrors('orderNumber')}" th:errors="*{orderNumber}"></span>
 
 			<div class="mt-4">
 				<a th:href="@{/rating/list}" class="btn btn-danger ml-3">Cancel</a>
@@ -35,5 +38,9 @@
 	</div>
 
 </div>
+
+		<img class="positioning" src="/jpeg/logo.png" />
+
+
 </body>
 </html>

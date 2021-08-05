@@ -14,11 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import com.nnk.springboot.controllers.RatingController;
 import com.nnk.springboot.controllers.UserController;
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.services.RatingServices;
 import com.nnk.springboot.services.UserServices;
 
 @RunWith(SpringRunner.class)

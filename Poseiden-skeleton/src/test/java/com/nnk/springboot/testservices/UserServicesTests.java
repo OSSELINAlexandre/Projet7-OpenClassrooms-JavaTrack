@@ -8,17 +8,13 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.repositories.UserRepository;
-import com.nnk.springboot.services.BidListServices;
 import com.nnk.springboot.services.UserServices;
 
 @RunWith(SpringRunner.class)

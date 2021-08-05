@@ -1,14 +1,8 @@
 package com.nnk.springboot.domain;
 
-import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import java.beans.JavaBean;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 
@@ -16,6 +10,7 @@ import java.sql.Timestamp;
 @Table(name = "bidlist")
 public class BidList {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bidlistid")

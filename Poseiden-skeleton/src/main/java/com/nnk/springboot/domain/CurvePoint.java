@@ -1,10 +1,9 @@
 package com.nnk.springboot.domain;
 
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.sql.Timestamp;
 
 @Entity
@@ -17,10 +16,12 @@ public class CurvePoint {
 	@Column(name = "id")
 	private int id;
 
-	@NotNull( message="must not be null")
+	@Min(value=1 , message ="must not be null")
+	@Max(value=127, message ="cannot be above 127 for Id")
 	@Column(name = "curveid")
 	private int curveId;
 
+	
 	@Column(name = "asofdate")
 	private Timestamp asOfDate;
 

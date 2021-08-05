@@ -2,7 +2,6 @@ package com.nnk.springboot.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 
@@ -15,7 +14,6 @@ public class Trade {
 	@Column(name = "Tradeid")
 	private int TradeId;
 
-	
 	@NotBlank( message="Account is mandatory")
 	@Column(name = "account")
 	private String account;
@@ -88,7 +86,6 @@ public class Trade {
 		super();
 	}
 
-	
 	
 	public Trade(String Tradeaccount, String Type) {
 		

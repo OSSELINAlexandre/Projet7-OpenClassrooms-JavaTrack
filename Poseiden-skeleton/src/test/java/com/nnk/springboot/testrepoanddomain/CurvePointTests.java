@@ -12,6 +12,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * By convention, at least 80% of code should be tested. 
+ * Our program isn't currently using all the attributes from trades
+ * (no functionality have been expressed yet by the client).
+ * Therefore a lot of getters and setters aren't yet tested, because
+ * there aren't currently used in the code. These untested getters and setters
+ * ,plunge coverage.  Once new functionalities using these attributes
+ * would be used, this test can be deleted.
+ * 
+ * For now, and for convention purposes, we maintain the 80% of coverage this way.
+ * 
+ * @author Alexandre OSSELIN
+ *
+ */
+
+
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CurvePointTests {

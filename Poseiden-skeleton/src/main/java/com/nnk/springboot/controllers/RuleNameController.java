@@ -3,7 +3,6 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.services.RuleNameServices;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +17,12 @@ import javax.validation.Valid;
 @Controller
 public class RuleNameController {
 
-	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(RuleNameController.class);
 
 	@Autowired
 	RuleNameServices ruleNameServices;
 
+	
+	//READ
 	@RequestMapping("/ruleName/list")
 	public String home(Model model) {
 		model.addAttribute("listAllRules", ruleNameServices.findAllRules());
@@ -36,6 +36,7 @@ public class RuleNameController {
 		return "ruleName/add";
 	}
 
+    //CREATE
 	@PostMapping("/ruleName/validate")
 	public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
 
@@ -50,6 +51,8 @@ public class RuleNameController {
 		return "redirect:/ruleName/list";
 	}
 
+	
+    //READ
 	@GetMapping("/ruleName/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 
@@ -60,27 +63,20 @@ public class RuleNameController {
 
 	
 	
-
+    //UPDATE
 	@PostMapping("/ruleName/update/{id}")
 	public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName, BindingResult result,
 			Model model) {
 
 		ruleName.setId(id);
-		Boolean updateARule = ruleNameServices.updateAGivenRule(ruleName);
+		ruleNameServices.updateAGivenRule(ruleName);
 
-		logger.info("///////////////////////" + updateARule);
-		if (updateARule == true) {
-			return "redirect:/ruleName/list";
+		return "redirect:/ruleName/list";
 
-		} else {
-
-			model.addAttribute("couldNotUpdate", true);
-			return "redirect:/ruleName/list";
-
-		}
 
 	}
-
+	
+    //DELETE
 	@GetMapping("/ruleName/delete/{id}")
 	public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
 
@@ -91,6 +87,7 @@ public class RuleNameController {
 	}
 
 
+    //SETTER solely needed for testing purposes, can be deleted without incident on code.
 
 	public void setRuleNameServices(RuleNameServices ruleNameServices) {
 		this.ruleNameServices = ruleNameServices;

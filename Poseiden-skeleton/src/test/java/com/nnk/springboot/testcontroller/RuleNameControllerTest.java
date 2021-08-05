@@ -14,11 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import com.nnk.springboot.controllers.RatingController;
 import com.nnk.springboot.controllers.RuleNameController;
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.RuleName;
-import com.nnk.springboot.services.RatingServices;
 import com.nnk.springboot.services.RuleNameServices;
 
 @RunWith(SpringRunner.class)

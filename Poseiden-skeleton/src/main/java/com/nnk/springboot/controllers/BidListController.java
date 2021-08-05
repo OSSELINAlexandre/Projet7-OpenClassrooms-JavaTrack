@@ -3,7 +3,6 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.services.BidListServices;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -20,13 +18,13 @@ import javax.validation.Valid;
 @Controller
 public class BidListController {
 	
-	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(BidListController.class);
 
 	
 	@Autowired
 	BidListServices bidListServices;
 	
 
+	//READ
     @RequestMapping("/bidList/list")
     public String home(Model model)
     {
@@ -35,14 +33,15 @@ public class BidListController {
         return "bidList/list";
     }
 
+
     @GetMapping("/bidList/add")
     public String addBidForm(BidList bid) {
         return "bidList/add";
     }
 
+    //CREATE
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return bid list	
     	
     	if(result.hasErrors()) {
     		
@@ -55,6 +54,7 @@ public class BidListController {
         return "redirect:/bidList/list";
     }
 
+    //READ
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	
@@ -65,29 +65,23 @@ public class BidListController {
         return "bidList/update";
     }
 
+    
+    //UPDATE
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
                              BindingResult result, Model model) {
     	
     	bidList.setBidlistid(id);
-    	Boolean updateABid = bidListServices.updateAGivenBid(bidList);
+    	bidListServices.updateAGivenBid(bidList);
 
-		logger.info("///////////////////////" + updateABid);
-		
-    	if(updateABid == true) {
+	
     		
-            return "redirect:/bidList/list";
+        return "redirect:/bidList/list";
             
-
-    	}else {
-    		
-    		model.addAttribute("couldNotUpdate" , true);
-            return "redirect:/bidList/list";
-
-    	}
     	
     }
 
+    //DELETE
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
         
@@ -97,6 +91,9 @@ public class BidListController {
         return "redirect:/bidList/list";
     	
     }
+    
+    
+    //SETTER solely needed for testing purposes, can be deleted without incident on code.
 
 	public void setBidListServices(BidListServices bidListServices) {
 		this.bidListServices = bidListServices;

@@ -8,10 +8,6 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.internal.configuration.injection.MockInjection;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,7 +16,7 @@ import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.services.BidListServices;
 
-//@RunWith(MockitoJUnitRunner.class) Quand tu fais ça; c'est finalement avec Mockito qe tu run, le spring context n'existe plus; 
+//@RunWith(MockitoJUnitRunner.class) with this runner, spring context doesn't exist anymore
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,7 +28,6 @@ public class BidListServicesTests {
 
 	private BidListServices bidListServices;
 	
-	private BidList testingItem;
 	
 	@Before()
 	public void init() {

@@ -5,21 +5,16 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nnk.springboot.controllers.BidListController;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 
-import ch.qos.logback.classic.Logger;
-
 @Service
-<span class="fc" id="L19">public class BidListServices {</span>
+<span class="fc" id="L15">public class BidListServices {</span>
 	
 	
-<span class="fc" id="L22">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(BidListServices.class);</span>
 
 	
 	@Autowired
@@ -27,27 +22,27 @@ import ch.qos.logback.classic.Logger;
 
 	public List&lt;BidList&gt; findAllBids() {
 		
-<span class="nc" id="L30">		return bidListRepository.findAll();</span>
+<span class="nc" id="L25">		return bidListRepository.findAll();</span>
 	}
 
 	public BidList saveANewBid(@Valid BidList bid) {
 		
-<span class="nc" id="L35">		return bidListRepository.save(bid);</span>
+<span class="nc" id="L30">		return bidListRepository.save(bid);</span>
 		
 	}
 
 	public Boolean deleteAGivenBid(Integer id) {
 		
-<span class="fc" id="L41">		Optional&lt;BidList&gt; foundItem = bidListRepository.findById(id);</span>
+<span class="fc" id="L36">		Optional&lt;BidList&gt; foundItem = bidListRepository.findById(id);</span>
 		
-<span class="fc bfc" id="L43" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
 			
-<span class="fc" id="L45">			return false;</span>
+<span class="fc" id="L40">			return false;</span>
 			
 		}else {
 			
-<span class="fc" id="L49">			bidListRepository.deleteById(id);</span>
-<span class="fc" id="L50">			return true;</span>
+<span class="fc" id="L44">			bidListRepository.deleteById(id);</span>
+<span class="fc" id="L45">			return true;</span>
 			
 		}
 		
@@ -57,23 +52,23 @@ import ch.qos.logback.classic.Logger;
 
 	public Boolean updateAGivenBid(@Valid BidList bidList) {
 		
-<span class="fc" id="L60">		Optional&lt;BidList&gt; foundItem = bidListRepository.findById(bidList.getBidlistid());</span>
+<span class="fc" id="L55">		Optional&lt;BidList&gt; foundItem = bidListRepository.findById(bidList.getBidlistid());</span>
 		
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
 			
-<span class="fc" id="L64">			return false;</span>
+<span class="fc" id="L59">			return false;</span>
 			
 		}else {
 			
-<span class="fc" id="L68">			bidListRepository.save(bidList);</span>
+<span class="fc" id="L63">			bidListRepository.save(bidList);</span>
 //			logger.info(&quot;=====|||||====&quot; + test.getBidlistid() + &quot;'''''' ''' &quot; + test.getBidQuantity());
-<span class="fc" id="L70">			return true;</span>
+<span class="fc" id="L65">			return true;</span>
 			
 		}
 	}
 
 	public BidList findSpecificBid(Integer id) {
-<span class="nc" id="L76">		return bidListRepository.findById(id).get();</span>
+<span class="nc" id="L71">		return bidListRepository.findById(id).get();</span>
 	}
 	
 	//
@@ -85,8 +80,8 @@ import ch.qos.logback.classic.Logger;
 	
 
 	public void setBidListRepository(BidListRepository bidListRepository) {
-<span class="fc" id="L88">		this.bidListRepository = bidListRepository;</span>
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L83">		this.bidListRepository = bidListRepository;</span>
+<span class="fc" id="L84">	}</span>
 	
 
 	

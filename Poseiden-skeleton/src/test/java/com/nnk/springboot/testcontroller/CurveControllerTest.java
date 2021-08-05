@@ -8,18 +8,14 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import com.nnk.springboot.controllers.BidListController;
 import com.nnk.springboot.controllers.CurveController;
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.services.BidListServices;
 import com.nnk.springboot.services.CurvePointServices;
 
 @RunWith(SpringRunner.class)
@@ -88,7 +84,7 @@ public class CurveControllerTest {
 		
 		String actual = curveController.validate(new CurvePoint(), bidingResult, model);
 		
-		assertTrue(actual.equals("redirect:/curvePoint/add"));
+		assertTrue(actual.equals("curvePoint/add"));
 		
 	}
 	
