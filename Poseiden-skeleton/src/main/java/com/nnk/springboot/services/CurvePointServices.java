@@ -22,7 +22,7 @@ public class CurvePointServices {
 
 	
 	@Autowired
-	CurvePointRepository curvePointRepository;
+	private CurvePointRepository curvePointRepository;
 
 	public List<CurvePoint> findAllCurvePoints() {
 		

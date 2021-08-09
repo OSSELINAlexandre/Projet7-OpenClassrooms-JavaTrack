@@ -19,7 +19,7 @@ public class TradeServices {
 	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(TradeServices.class);
 	
 	@Autowired
-	TradeRepository tradeRepository;
+	private TradeRepository tradeRepository;
 
 	public List<Trade> findAllTrades() {
 		return tradeRepository.findAll();

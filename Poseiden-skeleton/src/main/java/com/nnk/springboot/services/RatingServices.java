@@ -17,7 +17,7 @@ public class RatingServices {
 	
 	
 	@Autowired
-	RatingRepository ratingRepository;
+	private RatingRepository ratingRepository;
 
 
 	

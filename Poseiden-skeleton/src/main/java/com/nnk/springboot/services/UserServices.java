@@ -23,7 +23,7 @@ public class UserServices implements UserDetailsService {
 
 	
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	public List<User> findAllUsers() {
 

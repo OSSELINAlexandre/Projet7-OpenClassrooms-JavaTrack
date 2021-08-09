@@ -19,7 +19,7 @@ import com.nnk.springboot.repositories.TradeRepository;
 <span class="fc" id="L19">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(TradeServices.class);</span>
 	
 	@Autowired
-	TradeRepository tradeRepository;
+	private TradeRepository tradeRepository;
 
 	public List&lt;Trade&gt; findAllTrades() {
 <span class="nc" id="L25">		return tradeRepository.findAll();</span>

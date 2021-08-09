@@ -19,7 +19,7 @@ public class RuleNameServices {
 
 	
 	@Autowired
-	RuleNameRepository ruleNameRepository;
+	private RuleNameRepository ruleNameRepository;
 
 	public List<RuleName> findAllRules() {
 		
