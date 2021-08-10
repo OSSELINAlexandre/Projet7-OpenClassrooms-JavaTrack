@@ -91,7 +91,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      * 
      */
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	protected void configure(HttpSecurity http) throws Exception{
 
 		http.
 		authorizeRequests()
@@ -99,7 +99,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/user/**").hasAuthority("ADMIN")
 		.anyRequest().authenticated()
 		.and().formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password")
-		.defaultSuccessUrl("/bidList/list", true).permitAll().and().logout().permitAll();
+		.defaultSuccessUrl("/bidList/list", true).permitAll().and().logout().permitAll()
+		.and().oauth2Login().loginPage("/login");
 
 	}	
 

@@ -48,7 +48,7 @@ public class HomeControllerTests {
 	@Test
 	public void test_returnTheLoginPage() {
 		
-		String actual = homeController.returnTheLoginPage();
+		String actual = homeController.returnTheLoginPage(model);
 		assertTrue(actual.equals("login"));
 
 
