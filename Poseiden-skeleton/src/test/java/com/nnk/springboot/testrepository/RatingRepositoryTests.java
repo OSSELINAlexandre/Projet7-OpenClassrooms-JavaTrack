@@ -1,4 +1,4 @@
-package com.nnk.springboot.testrepoanddomain;
+package com.nnk.springboot.testrepository;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RatingTests {
+public class RatingRepositoryTests {
 
 	@Autowired
 	private RatingRepository ratingRepository;

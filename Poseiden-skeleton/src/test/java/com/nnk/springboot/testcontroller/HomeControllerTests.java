@@ -18,39 +18,30 @@ public class HomeControllerTests {
 
 	@MockBean
 	Model model;
-	
+
 	private HomeController homeController;
-	
+
 	@Before()
 	public void init() {
-		
+
 		homeController = new HomeController();
-		
+
 	}
-	
+
 	@Test
 	public void test_home() {
-		
+
 		String actual = homeController.home(model);
 		assertTrue(actual.equals("home"));
 
-
 	}
-	
+
 	@Test
 	public void test_adminHome() {
-		
+
 		String actual = homeController.adminHome(model);
-		assertTrue(actual.equals("redirect:/bidList/list"));
-
-
-	}
-	@Test
-	public void test_returnTheLoginPage() {
-		
-		String actual = homeController.returnTheLoginPage(model);
-		assertTrue(actual.equals("login"));
-
+		assertTrue(actual.equals("redirect:/user/list"));
 
 	}
+
 }

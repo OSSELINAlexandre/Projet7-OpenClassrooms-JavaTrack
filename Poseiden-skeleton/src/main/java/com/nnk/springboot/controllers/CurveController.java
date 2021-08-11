@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 /**
- * <b>CurveController est le controleur en charge du domaine 'CurvePoint'.</b>
+ * <b>CurveController est le contrôleur en charge du domaine 'CurvePoint'.</b>
  * <p>
  * Les méthodes CRUD sont les suivantes :
  * <ul>
  * <li>CREATE : validate.</li>
- * <li>READ : home (permettant de voire toutes les instances CurvePoint) &
+ * <li>READ : home (permettant de voir toutes les instances CurvePoint) &
  * showUpdateForm (permettant de lire une instance spécifique de
  * CurvePoint).</li>
  * <li>UPDATE : updateCurve.</li>
@@ -52,7 +52,7 @@ public class CurveController {
 
 	/**
 	 * 'home' permet d'exposer au client la liste de l'ensemble des instances de
-	 * 'CurvePoints' ayant eu lieu et enregistrés dans la base de données.
+	 * 'CurvePoint' ayant eu lieu et enregistrés dans la base de données.
 	 * 
 	 * La méthode permet d'appeler le service pour récupérer depuis la base de
 	 * donnée la liste en question et de l'insérer dans le modèle.
@@ -147,7 +147,7 @@ public class CurveController {
 	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
 	 * </p>
 	 * <p>
-	 * L'instance de CurvePoint est considérée valable grâces aux méthodes liées aux
+	 * L'instance de CurvePoint est considérée valable grâce aux méthodes liées aux
 	 * annotations visibles dans le domaine.
 	 * </p>
 	 * 

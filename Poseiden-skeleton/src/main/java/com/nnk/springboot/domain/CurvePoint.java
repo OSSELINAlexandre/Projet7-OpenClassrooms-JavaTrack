@@ -1,30 +1,51 @@
 package com.nnk.springboot.domain;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.sql.Timestamp;
 
+
+
+/**
+ * <b>CurvePoint est la classe représentant les points de courbes pour
+ * l'application Poseidon.</b>
+ * 
+ * <p>
+ * Les instances de cette classe proviennent de la base de donnée indiquée dans
+ * le application.properties.
+ * </p>
+ * 
+ * <p>
+ * L'ensemble des attributs de cette classe proviennent d'une demande client.
+ * </p>
+ * 
+ * <p>
+ * Les attributs considérés comme obligatoires à la validation des formulaires
+ * par le client sont annotées @Min, @Max
+ * </p>
+ * 
+ * @see CurvePointController
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Entity
 @Table(name = "curvepoint")
 public class CurvePoint {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
-	@Min(value=1 , message ="must not be null")
-	@Max(value=127, message ="cannot be above 127 for Id")
+	@Min(value = 1, message = "must not be null")
+	@Max(value = 127, message = "cannot be above 127 for Id")
 	@Column(name = "curveid")
 	private int curveId;
 
-	
 	@Column(name = "asofdate")
 	private Timestamp asOfDate;
-
 
 	@Column(name = "term")
 	private Double term;
@@ -52,7 +73,6 @@ public class CurvePoint {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 	public int getCurveId() {
 		return curveId;

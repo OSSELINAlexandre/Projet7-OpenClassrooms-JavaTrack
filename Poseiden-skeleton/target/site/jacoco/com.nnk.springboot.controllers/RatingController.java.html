@@ -12,89 +12,192 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import javax.validation.Valid;
 
+/**
+ * &lt;b&gt;RatingController est le contrôleur en charge du domaine 'Rating'.&lt;/b&gt;
+ * &lt;p&gt;
+ * Les méthodes CRUD sont les suivantes :
+ * &lt;ul&gt;
+ * &lt;li&gt;CREATE : validate.&lt;/li&gt;
+ * &lt;li&gt;READ : home (permettant de voir toutes les instances Rating) &amp;
+ * showUpdateForm (permettant de lire une instance spécifique de Rating).&lt;/li&gt;
+ * &lt;li&gt;UPDATE : updateRating.&lt;/li&gt;
+ * &lt;li&gt;DELETE : deleteRating.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Tous les templates sont entreposés dans les ressources.
+ * &lt;/p&gt;
+ * 
+ * @see Rating
+ * @see RatingServices
+ * @see src/resources/templates/rating
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Controller
-<span class="fc" id="L19">public class RatingController {</span>
+<span class="fc" id="L41">public class RatingController {</span>
 
-
-	
+	/**
+	 * Service lié au contrôleur RatingController.
+	 */
 	@Autowired
 	private RatingServices ratingServices;
 
-	
-	//READ
+	/**
+	 * 'home' permet d'exposer au client la liste de l'ensemble des instances
+	 * 'Ratings' ayant eu lieu et enregistrés dans la base de données.
+	 * 
+	 * La méthode permet d'appeler le service pour récupérer depuis la base de
+	 * donnée la liste en question et de l'insérer dans le modèle.
+	 * 
+	 * 
+	 * @param model
+	 * @return rating/list
+	 */
 	@RequestMapping(&quot;/rating/list&quot;)
 	public String home(Model model) {
 
-<span class="fc" id="L31">		model.addAttribute(&quot;listAllRating&quot;, ratingServices.findAllRatings());</span>
+<span class="fc" id="L63">		model.addAttribute(&quot;listAllRating&quot;, ratingServices.findAllRatings());</span>
 
-<span class="fc" id="L33">		return &quot;rating/list&quot;;</span>
+<span class="fc" id="L65">		return &quot;rating/list&quot;;</span>
 	}
 
+	/**
+	 * 'addRatingForm' permet d'appeler le formulaire assurant la création d'un
+	 * nouveau 'CurvePoint'.
+	 * 
+	 * @param rating
+	 * @return rating/add
+	 */
 	@GetMapping(&quot;/rating/add&quot;)
 	public String addRatingForm(Rating rating) {
-<span class="fc" id="L38">		return &quot;rating/add&quot;;</span>
+<span class="fc" id="L77">		return &quot;rating/add&quot;;</span>
 	}
-	
-    //CREATE
+
+	/**
+	 * 'validate' [CREATE] appeler depuis le formulaire d'ajout, permet d'aiguiller
+	 * en fonction d'une erreur ou non vers les pages correspondantes. Ces erreurs
+	 * sont renvoyés directement depuis le template grâces aux méthodes liées aux
+	 * annotations dans le modèle de Rating.
+	 * 
+	 * &lt;P&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;Si une erreur est présente (informations renvoyées directement depuis le
+	 * template) nous retournons la page initiale de création d'un nouveau 'Rating'
+	 * dans lequel les erreurs seront affichées.&lt;/li&gt;
+	 * 
+	 * 
+	 * 
+	 * &lt;li&gt;Si aucune erreur est présente (informations renvoyées directement depuis
+	 * le template),le service enregistre la nouvelle instance et l'aiguilleur
+	 * redirige vers la page de présentation de l'ensemble des 'Rating'.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @see Rating
+	 * @param rating
+	 * @param result
+	 * @param model
+	 * @return redirect:/rating/list
+	 */
 	@PostMapping(&quot;/rating/validate&quot;)
 	public String validate(@Valid Rating rating, BindingResult result, Model model) {
 
-<span class="fc bfc" id="L45" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
 
-<span class="fc" id="L47">			return &quot;rating/add&quot;;</span>
+<span class="fc" id="L112">			return &quot;rating/add&quot;;</span>
 
 		}
 
-		
-<span class="fc" id="L52">		ratingServices.saveANewRating(rating);</span>
+<span class="fc" id="L116">		ratingServices.saveANewRating(rating);</span>
 
-<span class="fc" id="L54">		return &quot;redirect:/rating/list&quot;;</span>
+<span class="fc" id="L118">		return &quot;redirect:/rating/list&quot;;</span>
 	}
 
-    //READ
+	/**
+	 * showUpdateForm appeler depuis la liste des instances de 'Rating' en BDD,
+	 * permet à partir d'un ID d'une instance de Rating, de présenter le formulaire
+	 * de modification de l'instance du Rating en question. Cette méthode permet
+	 * d'ajouter au 'model' l'instance spécifique en question grâce au service.
+	 * 
+	 * @param id
+	 * @param model
+	 * @return update
+	 */
 	@GetMapping(&quot;/rating/update/{id}&quot;)
 
 	public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 
+<span class="fc" id="L135">		model.addAttribute(&quot;ratingToUpdate&quot;, ratingServices.findSpecificRating(id));</span>
 
-<span class="fc" id="L63">		model.addAttribute(&quot;ratingToUpdate&quot;, ratingServices.findSpecificRating(id));</span>
-		
-<span class="fc" id="L65">		return &quot;rating/update&quot;;</span>
-		
+<span class="fc" id="L137">		return &quot;rating/update&quot;;</span>
+
 	}
 
-    //UPDATE
+	/**
+	 * &lt;p&gt;
+	 * updateRating [UPDATE] permet, depuis une instance valide de Rating, de
+	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
+	 * &lt;/p&gt;
+	 * &lt;p&gt;
+	 * L'instance de Rating est considérée valable grâce aux méthodes liées aux
+	 * annotations visibles dans le domaine.
+	 * &lt;/p&gt;
+	 * 
+	 * @see Rating
+	 * 
+	 * @param id
+	 * @param rating
+	 * @param result
+	 * @param model
+	 * @return redirect:/rating/list
+	 */
 	@PostMapping(&quot;/rating/update/{id}&quot;)
 	public String updateRating(@PathVariable(&quot;id&quot;) Integer id, @Valid Rating rating, BindingResult result,
 			Model model) {
 
-<span class="fc" id="L74">		rating.setId(id);</span>
-<span class="fc" id="L75">		ratingServices.updateAGivenRating(rating);</span>
-<span class="fc" id="L76">		return &quot;redirect:/rating/list&quot;;</span>
-
+<span class="fc" id="L163">		rating.setId(id);</span>
+<span class="fc" id="L164">		ratingServices.updateAGivenRating(rating);</span>
+<span class="fc" id="L165">		return &quot;redirect:/rating/list&quot;;</span>
 
 	}
 
-    //DELETE
+	/**
+	 * &lt;p&gt;
+	 * deleteCurve [DELETE], appeler depuis la liste, permet de supprimer une
+	 * instance de Rating, spécifiée par l'ID, de la base de donnée.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * Seuls des instances valables sont déjà enregistrés dans la base de donnée et
+	 * afficher dans la liste, ainsi l'instance spécifiée par l'ID et devant être
+	 * supprimé est de ce fait valable.
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @param model
+	 * @return redirect:/rating/list
+	 */
 	@GetMapping(&quot;/rating/delete/{id}&quot;)
 	public String deleteRating(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 
-<span class="fc" id="L85">		ratingServices.deleteAGivenRating(id);</span>
+<span class="fc" id="L189">		ratingServices.deleteAGivenRating(id);</span>
 
-<span class="fc" id="L87">		return &quot;redirect:/rating/list&quot;;</span>
+<span class="fc" id="L191">		return &quot;redirect:/rating/list&quot;;</span>
 
 	}
-	
-    //SETTER solely needed for testing purposes, can be deleted without incident on code.
+
+	// SETTER solely needed for testing purposes, can be deleted without incident on
+	// code.
 
 	public void setRatingServices(RatingServices ratingServices) {
-<span class="fc" id="L94">		this.ratingServices = ratingServices;</span>
-<span class="fc" id="L95">	}</span>
-	
-	
-	
+<span class="fc" id="L199">		this.ratingServices = ratingServices;</span>
+<span class="fc" id="L200">	}</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

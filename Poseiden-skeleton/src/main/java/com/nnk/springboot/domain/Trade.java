@@ -5,6 +5,29 @@ import javax.validation.constraints.NotBlank;
 
 import java.sql.Timestamp;
 
+/**
+ * <b>Trade est la classe représentant les règles à appliquer pour les enchères
+ * d'achat et vente pour l'application Poseidon.</b>
+ * 
+ * <p>
+ * Les instances de cette classe proviennent de la base de donnée indiquée dans
+ * le application.properties.
+ * </p>
+ * 
+ * <p>
+ * L'ensemble des attributs de cette classe proviennent d'une demande client.
+ * </p>
+ * 
+ * <p>
+ * Les attributs considérés comme obligatoires à la validation des formulaires
+ * par le client sont annotées @NotBlank
+ * </p>
+ * 
+ * @see TradeController
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Entity
 @Table(name = "trade")
 public class Trade {
@@ -14,11 +37,11 @@ public class Trade {
 	@Column(name = "Tradeid")
 	private int TradeId;
 
-	@NotBlank( message="Account is mandatory")
+	@NotBlank(message = "Account is mandatory")
 	@Column(name = "account")
 	private String account;
 
-	@NotBlank( message="Type is mandatory")
+	@NotBlank(message = "Type is mandatory")
 	@Column(name = "type")
 	private String type;
 
@@ -75,20 +98,19 @@ public class Trade {
 
 	@Column(name = "side")
 	private String side;
-	
+
 	private Boolean buyIsTrueSellIsFalse;
-	
+
 	private Double priceFromForm;
-	
+
 	private Double quantityFromForm;
 
 	public Trade() {
 		super();
 	}
 
-	
 	public Trade(String Tradeaccount, String Type) {
-		
+
 		this.account = Tradeaccount;
 		this.type = Type;
 	}
@@ -284,9 +306,5 @@ public class Trade {
 	public void setQuantityFromForm(Double quantityFromForm) {
 		this.quantityFromForm = quantityFromForm;
 	}
-	
-	
-	
-
 
 }

@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 /**
- * <b>BidListController est le controleur en charge du domaine 'BidList'.</b>
+ * <b>BidListController est le contrôleur en charge du domaine 'BidList'.</b>
  * <p>
  * Les méthodes CRUD sont les suivantes :
  * <ul>
  * <li>CREATE : validate.</li>
- * <li>READ : home (permettant de voire toutes les instances BidList) &
+ * <li>READ : home (permettant de voir toutes les instances BidList) &
  * showUpdateForm (permettant de lire une instance spécifique de BidList).</li>
  * <li>UPDATE : updateBid.</li>
  * <li>DELETE : deleteBid.</li>
@@ -47,11 +47,15 @@ public class BidListController {
 	private BidListServices bidListServices;
 
 	/**
+	 * <p>
 	 * 'home' permet d'exposer au client la liste de l'ensemble des instances
 	 * de'BidsList' ayant eu lieu et enregistrés dans la base de données.
+	 * </p>
 	 * 
+	 * <p>
 	 * La méthode permet d'appeler le service pour récupérer depuis la base de
 	 * donnée la liste en question et de l'insérer dans le modèle.
+	 * </p>
 	 * 
 	 * 
 	 * @param model
@@ -59,14 +63,14 @@ public class BidListController {
 	 */
 	@RequestMapping("/bidList/list")
 	public String home(Model model) {
-
 		model.addAttribute("listAllBids", bidListServices.findAllBids());
 		return "bidList/list";
+
 	}
 
 	/**
 	 * 'addBidForm' permet d'appeler le formulaire assurant la création d'un nouveau
-	 * 'Bid'.
+	 * 'BidList'.
 	 * 
 	 * @param bid
 	 * @return bidList/add
@@ -74,6 +78,7 @@ public class BidListController {
 	@GetMapping("/bidList/add")
 	public String addBidForm(BidList bid) {
 		return "bidList/add";
+
 	}
 
 	/**
@@ -85,14 +90,14 @@ public class BidListController {
 	 * <P>
 	 * <ul>
 	 * <li>Si une erreur est présente (informations renvoyées directement depuis le
-	 * template) nous retournons la page initiale de création d'un nouveau 'Bid'
+	 * template) nous retournons la page initiale de création d'un nouveau 'BidList'
 	 * dans lequel les erreurs seront affichées.</li>
 	 * 
 	 * 
 	 * 
 	 * <li>Si aucune erreur est présente (informations renvoyées directement depuis
 	 * le template),le service enregistre la nouvelle instance et l'aiguilleur
-	 * redirige vers la page de présentation de l'ensemble des 'Bid'.</li>
+	 * redirige vers la page de présentation de l'ensemble des 'BidList'.</li>
 	 * </ul>
 	 * </p>
 	 * 
@@ -137,11 +142,11 @@ public class BidListController {
 
 	/**
 	 * <p>
-	 * updateBid [UPDATE] permet, depuis une instance valide de Bid, de sauvegarder
-	 * une mise à jour de ladite instance dans la base de donnée.
+	 * updateBid [UPDATE] permet, depuis une instance valide de 'BidList', de
+	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
 	 * </p>
 	 * <p>
-	 * L'instance de BidList est considérée valable grâces aux méthodes liées aux
+	 * L'instance de BidList est considérée valable grâce aux méthodes liées aux
 	 * annotations visibles dans le domaine.
 	 * </p>
 	 * 
@@ -172,7 +177,7 @@ public class BidListController {
 	 * <p>
 	 * Seuls des instances valables sont déjà enregistrés dans la base de donnée et
 	 * afficher dans la liste, ainsi l'instance spécifiée par l'ID et devant être
-	 * supprimé est de ce fait valable.
+	 * supprimée est de ce fait valable.
 	 * </p>
 	 * 
 	 * 

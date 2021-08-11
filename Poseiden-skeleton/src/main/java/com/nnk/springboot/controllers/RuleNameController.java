@@ -1,8 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.RuleName;
-import com.nnk.springboot.services.RatingServices;
 import com.nnk.springboot.services.RuleNameServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 /**
- * <b>RuleNameController est le controleur en charge du domaine 'RuleName'.</b>
+ * <b>RuleNameController est le contrôleur en charge du domaine 'RuleName'.</b>
  * <p>
  * Les méthodes CRUD sont les suivantes :
  * <ul>
  * <li>CREATE : validate.</li>
- * <li>READ : home (permettant de voire toutes les instances RuleName) &
+ * <li>READ : home (permettant de voir toutes les instances RuleName) &
  * showUpdateForm (permettant de lire une instance spécifique de RuleName).</li>
  * <li>UPDATE : updateRuleName.</li>
  * <li>DELETE : deleteRuleName.</li>
@@ -143,7 +141,7 @@ public class RuleNameController {
 	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
 	 * </p>
 	 * <p>
-	 * L'instance de RuleName est considérée valable grâces aux méthodes liées aux
+	 * L'instance de RuleName est considérée valable grâce aux méthodes liées aux
 	 * annotations visibles dans le domaine.
 	 * </p>
 	 * 

@@ -1,38 +1,44 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="utf-8"/>
-<title>Home</title>
-<link rel="stylesheet" href="/css/bootstrap.css" >
-<link rel="stylesheet" href="/css/logoProp.css">
+	<meta charset="utf-8" />
+	<title>Home</title>
+	<link rel="stylesheet" href="/css/bootstrap.css">
+	<link rel="stylesheet" href="/css/logoProp.css">
 
 </head>
-<body>
-<div class="container">
-	<div class="row">
-		<h2>Update CurvePoint</h2>
+
+<body class="d-flex flex-column">
+	<div class="container  minContainerUpdateAdd">
+		<div class="row">
+			<h2>Update CurvePoint</h2>
+		</div>
+
+		<div class="row">
+			<form action="#" th:action="@{/curvePoint/update/{id}(id=${curvePointToUpdate.id})}"
+				th:object="${curvePointToUpdate}" method="post" class="form-horizontal" style="width: 100%">
+				<h4 class="mt-3">Curve Id</h4>
+				<input class="w-100" type="number" min="1" max="127" text="${curvePointToUpdate.CurveId}"
+					th:field="*{CurveId}" required oninput="validity.valid||(value='');"></input>
+				<h4 class="mt-3">Term</h4>
+				<input class="w-100" type="number" min="1" text="${curvePointToUpdate.term}" th:field="*{term}" required
+					oninput="validity.valid||(value='');"></input>
+				<h4 class="mt-3">Value</h4>
+				<input class="w-100" type="number" text="${curvePointToUpdate.value}" th:field="*{value}"
+					required></input>
+
+				<div class="mt-4">
+					<a th:href="@{/curvePoint/list}" class="btn btn-danger ml-3">Cancel</a>
+					<button type="submit" class="btn btn-primary">update CurvePoint</button>
+				</div>
+			</form>
+		</div>
+
 	</div>
 
-	<div class="row">
-		<form action="#" th:action="@{/curvePoint/update/{id}(id=${curvePointToUpdate.id})}" th:object="${curvePointToUpdate}" method="post" class="form-horizontal" style="width: 100%">
-			<h4 class="mt-3">Curve Id</h4>
-			<input class ="w-100" type="number" min="1" max="127" text="${curvePointToUpdate.CurveId}" th:field="*{CurveId}" required oninput="validity.valid||(value='');"></input>
-			<h4 class="mt-3">Term</h4>
-			<input class ="w-100" type="number" min ="1" text="${curvePointToUpdate.term}" th:field="*{term}" required oninput="validity.valid||(value='');"></input>
-			<h4 class="mt-3">Value</h4>
-			<input class ="w-100" type="number" text="${curvePointToUpdate.value}" th:field="*{value}" required></input>
-
-			<div class="mt-4">
-				<a th:href="@{/curvePoint/list}" class="btn btn-danger ml-3">Cancel</a>
-				<button type="submit" class="btn btn-primary">update BidList</button>
-			</div>
-		</form>
-	</div>
-
-</div>
-
-		<img class="positioning" src="/jpeg/logo.png" />
+	<img class="positioning" src="/jpeg/logo.png" />
 
 </body>
+
 </html>

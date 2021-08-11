@@ -1,9 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.services.RatingServices;
 import com.nnk.springboot.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 /**
- * <b>UserController est le controleur en charge du domaine 'User'.</b>
+ * <b>UserController est le contrôleur en charge du domaine 'User'.</b>
  * <p>
  * Les méthodes CRUD sont les suivantes :
  * <ul>
  * <li>CREATE : validate.</li>
- * <li>READ : home (permettant de voire toutes les instances RuleName) &
+ * <li>READ : home (permettant de voir toutes les instances RuleName) &
  * showUpdateForm (permettant de lire une instance spécifique de RuleName).</li>
  * <li>UPDATE : updateRuleName.</li>
  * <li>DELETE : deleteRuleName.</li>

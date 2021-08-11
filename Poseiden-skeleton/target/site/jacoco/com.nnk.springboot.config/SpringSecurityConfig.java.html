@@ -11,50 +11,105 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.nnk.springboot.services.UserServices;
 
+/**
+ * &lt;b&gt;SpringSecurityConfig est la classe représentant la configuration de
+ * sécurité pour l'authentification et l'autorisation par session (Spring Security) et par token
+ * via OAuth 2.0.&lt;/b&gt;
+ * &lt;p&gt;
+ * SpringSecurityConfig est caractérisé par les éléments suivants.
+ * &lt;ul&gt;
+ * &lt;li&gt;Une instance injectée de UserServices.&lt;/li&gt;
+ * &lt;li&gt;Un 'Bean' de BCryptPasswordEncoder.&lt;/li&gt;
+ * &lt;li&gt;Un 'Bean' de DaoAuthenticationProvider.&lt;/li&gt;
+ * &lt;li&gt;L'extension de WebSecurityConfigurerAdapter.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ * 
+ * @see UserServices
+ * @see BCryptPasswordEncoder
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
+
 @Configuration
 @EnableWebSecurity
-<span class="fc" id="L16">public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {</span>
+<span class="fc" id="L37">public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {</span>
 
-	
 	@Autowired
 	private UserServices userServices;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 
-<span class="fc" id="L25">		return new BCryptPasswordEncoder();</span>
+<span class="fc" id="L45">		return new BCryptPasswordEncoder();</span>
+		
 	}
-	
-	
 
+	/**
+	 * &lt;b&gt;Le Bean 'daoAuthenticationProvider' permet de configurer
+	 * l'authentification manuellement à partir des informations de la base de
+	 * donnée.&lt;/b&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;Le service en charge de la récupération des informations est
+	 * userServices.&lt;/li&gt;
+	 * &lt;li&gt;Le cryptage du mot de passe se fait avec BCryptPasswordEncoder.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * &lt;p&gt;
+	 * La classe retournée permet auprès de Spring Security de valider ou non
+	 * l'authentification de l'utilisateur tentant de se connecter à nos services.
+	 * &lt;/p&gt;
+	 * 
+	 * @return DaoAuthenticationProvider
+	 */
 	@Bean
 	public DaoAuthenticationProvider daoAuthenticationProvider() {
 
-<span class="fc" id="L33">		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();</span>
-<span class="fc" id="L34">		authProvider.setUserDetailsService(userServices);</span>
-<span class="fc" id="L35">		authProvider.setPasswordEncoder(passwordEncoder());</span>
-<span class="fc" id="L36">		return authProvider;</span>
+<span class="fc" id="L69">		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();</span>
+<span class="fc" id="L70">		authProvider.setUserDetailsService(userServices);</span>
+<span class="fc" id="L71">		authProvider.setPasswordEncoder(passwordEncoder());</span>
+<span class="fc" id="L72">		return authProvider;</span>
 	}
 
+	/**
+	 * &lt;b&gt;La méthode 'configure' ayant pour argument 'AuthenticationManagerBuilder'
+	 * gère l'authentification&lt;/b&gt;
+	 * &lt;p&gt;
+	 * L'authentification passe par le Bean 'daoAuthenticationProvider'
+	 * &lt;/p&gt;
+	 * 
+	 * @see daoAuthenticationProvider
+	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-<span class="fc" id="L42">		auth.authenticationProvider(daoAuthenticationProvider());</span>
-<span class="fc" id="L43">	}</span>
+<span class="fc" id="L87">		auth.authenticationProvider(daoAuthenticationProvider());</span>
+<span class="fc" id="L88">	}</span>
 
-	
+	/**
+	 * &lt;b&gt;La méthode 'configure' ayant pour argument 'HttpSecurity' gère les
+	 * autorisations des requêtes entrantes. Cette méthode permet soit
+	 * l'autorisation par Token(GitHub) ou par Session(Spring Security).&lt;/b&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;Nous autorisons tous les fichiers du répertoire CSS à l'accès ainsi que
+	 * aux logos sans autorisation (permettant la mise en forme)&lt;/li&gt;
+	 * &lt;li&gt;Toutes les pages ayant pour URL '/User' ne sont autorisées qu'aux
+	 * personnes ayant pour autorité 'ADMIN'&lt;/li&gt;
+	 * &lt;li&gt;Toutes les autres requêtes doivent être authentifiées à partir de la page
+	 * login disponible en '/login'.&lt;/li&gt;
+	 * 
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-<span class="fc" id="L49">		http.</span>
-<span class="fc" id="L50">		authorizeRequests()</span>
-<span class="fc" id="L51">		.antMatchers(&quot;/css/**&quot;, &quot;/jpeg/logo.png&quot;).permitAll()</span>
-<span class="fc" id="L52">		.antMatchers(&quot;/user/**&quot;).hasAuthority(&quot;ADMIN&quot;)</span>
-<span class="fc" id="L53">		.anyRequest().authenticated()</span>
-<span class="fc" id="L54">		.and().formLogin().loginPage(&quot;/login&quot;).usernameParameter(&quot;username&quot;).passwordParameter(&quot;password&quot;)</span>
-<span class="fc" id="L55">		.defaultSuccessUrl(&quot;/bidList/list&quot;, true).permitAll().and().logout().permitAll();</span>
+<span class="fc" id="L106">		http.authorizeRequests().antMatchers(&quot;/css/**&quot;, &quot;/jpeg/**&quot;).permitAll().antMatchers(&quot;/user/**&quot;)</span>
+<span class="fc" id="L107">				.hasAuthority(&quot;ADMIN&quot;).anyRequest().authenticated().and().formLogin().loginPage(&quot;/login&quot;)</span>
+<span class="fc" id="L108">				.usernameParameter(&quot;username&quot;).passwordParameter(&quot;password&quot;).defaultSuccessUrl(&quot;/UserCredential&quot;, true)</span>
+<span class="fc" id="L109">				.permitAll().and().logout().permitAll().and().oauth2Login().loginPage(&quot;/login&quot;)</span>
+<span class="fc" id="L110">				.defaultSuccessUrl(&quot;/UserCredential&quot;);</span>
 
-<span class="fc" id="L57">	}	</span>
+<span class="fc" id="L112">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

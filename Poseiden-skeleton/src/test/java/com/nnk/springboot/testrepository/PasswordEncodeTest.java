@@ -1,4 +1,4 @@
-package com.nnk.springboot.testrepoanddomain;
+package com.nnk.springboot.testrepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

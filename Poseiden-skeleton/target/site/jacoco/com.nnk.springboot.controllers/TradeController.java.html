@@ -14,73 +14,181 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+/**
+ * &lt;b&gt;TradeController est le contrôleur en charge du domaine 'Trade'.&lt;/b&gt;
+ * &lt;p&gt;
+ * Les méthodes CRUD sont les suivantes :
+ * &lt;ul&gt;
+ * &lt;li&gt;CREATE : validate.&lt;/li&gt;
+ * &lt;li&gt;READ : home (permettant de voir toutes les instances Trade) &amp;
+ * showUpdateForm (permettant de lire une instance spécifique de Trade).&lt;/li&gt;
+ * &lt;li&gt;UPDATE : updateTrade.&lt;/li&gt;
+ * &lt;li&gt;DELETE : deleteTrade.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Tous les templates sont entreposés dans les ressources.
+ * &lt;/p&gt;
+ * 
+ * @see Trade
+ * @see TradeServices
+ * @see src/resources/templates/trade
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Controller
-<span class="fc" id="L18">public class TradeController {</span>
+<span class="fc" id="L41">public class TradeController {</span>
 
-
+	/**
+	 * Service lié au contrôleur TradeController.
+	 */
 	@Autowired
 	private TradeServices tradeServices;
 
-	// READ
+	/**
+	 * 'home' permet d'exposer au client la liste de l'ensemble des instances de
+	 * 'Trade' ayant eu lieu et enregistrés dans la base de données.
+	 * 
+	 * La méthode permet d'appeler le service pour récupérer depuis la base de
+	 * donnée la liste en question et de l'insérer dans le modèle.
+	 * 
+	 * 
+	 * @param model
+	 * @return trade/list
+	 */
 	@RequestMapping(&quot;/trade/list&quot;)
 	public String home(Model model) {
-<span class="fc" id="L27">		model.addAttribute(&quot;listAllTrades&quot;, tradeServices.findAllTrades());</span>
+<span class="fc" id="L62">		model.addAttribute(&quot;listAllTrades&quot;, tradeServices.findAllTrades());</span>
 
-<span class="fc" id="L29">		return &quot;trade/list&quot;;</span>
+<span class="fc" id="L64">		return &quot;trade/list&quot;;</span>
 	}
 
+	/**
+	 * 'addTrade' permet d'appeler le formulaire assurant la création d'un nouveau
+	 * 'Trade'.
+	 * 
+	 * @param trade
+	 * @return trade/add
+	 */
 	@GetMapping(&quot;/trade/add&quot;)
 	public String addTrade(Trade trade) {
-<span class="fc" id="L34">		return &quot;trade/add&quot;;</span>
+<span class="fc" id="L76">		return &quot;trade/add&quot;;</span>
 	}
 
-	// CREATE
+	/**
+	 * 'validate' [CREATE] appeler depuis le formulaire d'ajout, permet d'aiguiller
+	 * en fonction d'une erreur ou non vers les pages correspondantes. Ces erreurs
+	 * sont renvoyés directement depuis le template grâces aux méthodes liées aux
+	 * annotations dans le modèle de Trade.
+	 * 
+	 * &lt;P&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;Si une erreur est présente (informations renvoyées directement depuis le
+	 * template) nous retournons la page initiale de création d'un nouveau 'Trade'
+	 * dans lequel les erreurs seront affichées.&lt;/li&gt;
+	 * 
+	 * 
+	 * 
+	 * &lt;li&gt;Si aucune erreur est présente (informations renvoyées directement depuis
+	 * le template) l'aiguilleur redirige vers la page de présentation de l'ensemble
+	 * des 'Trade'.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @see Trade
+	 * @param trade
+	 * @param result
+	 * @param model
+	 * @return redirect:/trade/list
+	 */
 	@PostMapping(&quot;/trade/validate&quot;)
 	public String validate(@Valid Trade trade, BindingResult result, Model model) {
 
-<span class="fc bfc" id="L41" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
 
-<span class="fc" id="L43">			return &quot;trade/add&quot;;</span>
+<span class="fc" id="L111">			return &quot;trade/add&quot;;</span>
 
 		}
 
-<span class="fc" id="L47">		trade = tradeServices.setIfTradeIfASellOrABuy(trade);</span>
-<span class="fc" id="L48">		tradeServices.saveANewTrade(trade);</span>
+<span class="fc" id="L115">		trade = tradeServices.setIfTradeIfASellOrABuy(trade);</span>
+<span class="fc" id="L116">		tradeServices.saveANewTrade(trade);</span>
 
-<span class="fc" id="L50">		return &quot;redirect:/trade/list&quot;;</span>
+<span class="fc" id="L118">		return &quot;redirect:/trade/list&quot;;</span>
 
 	}
 
-	// READ
+	/**
+	 * showUpdateForm appeler depuis la liste des instances de 'Trade' en BDD,
+	 * permet à partir d'un ID d'une instance de Trade, de présenter le formulaire
+	 * de modification de l'instance du Trade en question. Cette méthode permet
+	 * d'ajouter au 'model' l'instance spécifique en question grâce au service.
+	 * 
+	 * @param id
+	 * @param model
+	 * @return update
+	 */
 	@GetMapping(&quot;/trade/update/{id}&quot;)
 	public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 
+<span class="fc" id="L135">		model.addAttribute(&quot;tradeToUpdate&quot;, tradeServices.findSpecificTrade(id));</span>
 
-<span class="fc" id="L59">		model.addAttribute(&quot;tradeToUpdate&quot;, tradeServices.findSpecificTrade(id));</span>
-
-<span class="fc" id="L61">		return &quot;trade/update&quot;;</span>
+<span class="fc" id="L137">		return &quot;trade/update&quot;;</span>
 	}
 
-	// UPDATE
+	/**
+	 * &lt;p&gt;
+	 * updateRuleName [UPDATE] permet, depuis une instance valide de Trade, de
+	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
+	 * &lt;/p&gt;
+	 * &lt;p&gt;
+	 * L'instance de Trade est considérée valable grâce aux méthodes liées aux
+	 * annotations visibles dans le domaine.
+	 * &lt;/p&gt;
+	 * 
+	 * @see Trade
+	 * 
+	 * @param id
+	 * @param trade
+	 * @param result
+	 * @param model
+	 * @return redirect:/trade/list
+	 */
 	@PostMapping(&quot;/trade/update/{id}&quot;)
 	public String updateTrade(@PathVariable(&quot;id&quot;) Integer id, @Valid Trade trade, BindingResult result, Model model) {
 
-<span class="fc" id="L68">		trade.setTradeId(id);</span>
+<span class="fc" id="L161">		trade.setTradeId(id);</span>
 
-<span class="fc" id="L70">		tradeServices.updateAGivenTrade(trade);</span>
+<span class="fc" id="L163">		tradeServices.updateAGivenTrade(trade);</span>
 
-
-<span class="fc" id="L73">		return &quot;redirect:/trade/list&quot;;</span>
+<span class="fc" id="L165">		return &quot;redirect:/trade/list&quot;;</span>
 
 	}
 
-	// DELETE
+	/**
+	 * &lt;p&gt;
+	 * deleteCurve [DELETE], appeler depuis la liste, permet de supprimer une
+	 * instance de Trade, spécifiée par l'ID, de la base de donnée.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * Seuls des instances valables sont déjà enregistrés dans la base de donnée et
+	 * afficher dans la liste, ainsi l'instance spécifiée par l'ID et devant être
+	 * supprimé est de ce fait valable.
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @param model
+	 * @return redirect:/trade/list
+	 */
 	@GetMapping(&quot;/trade/delete/{id}&quot;)
 	public String deleteTrade(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 
-<span class="fc" id="L81">		tradeServices.deleteAGivenTrade(id);</span>
+<span class="fc" id="L189">		tradeServices.deleteAGivenTrade(id);</span>
 
-<span class="fc" id="L83">		return &quot;redirect:/trade/list&quot;;</span>
+<span class="fc" id="L191">		return &quot;redirect:/trade/list&quot;;</span>
 
 	}
 
@@ -88,8 +196,8 @@ import javax.validation.Valid;
 	// code.
 
 	public void setTradeServices(TradeServices tradeServices) {
-<span class="fc" id="L91">		this.tradeServices = tradeServices;</span>
-<span class="fc" id="L92">	}</span>
+<span class="fc" id="L199">		this.tradeServices = tradeServices;</span>
+<span class="fc" id="L200">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.nnk.springboot.testservices.UserServicesTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.877 s - in com.nnk.springboot.testservices.UserServicesTests
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.128 s - in com.nnk.springboot.testservices.UserServicesTests

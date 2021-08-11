@@ -16,93 +16,147 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 
+/**
+ * &lt;b&gt;UserServices est le service permettant d'insérer la logique business dans
+ * le domaine métier User.&lt;/b&gt;
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Service
-<span class="fc" id="L20">public class UserServices implements UserDetailsService {</span>
+<span class="fc" id="L27">public class UserServices implements UserDetailsService {</span>
 
-<span class="fc" id="L22">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(UserServices.class);</span>
+<span class="fc" id="L29">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(UserServices.class);</span>
 
-	
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * 
+	 * &lt;b&gt;findAllUsers retourne l'ensemble des User existant dans la base de
+	 * donnée.&lt;/b&gt;
+	 * 
+	 * @return List&lt;User&gt;
+	 */
 	public List&lt;User&gt; findAllUsers() {
 
-<span class="nc" id="L30">		return userRepository.findAll();</span>
+<span class="nc" id="L43">		return userRepository.findAll();</span>
 	}
 
+	/**
+	 * 
+	 * &lt;b&gt;saveANewUser permet de sauvegarder un User déjà validé au préalable dans
+	 * la base de donnée. &lt;/b&gt;
+	 * 
+	 * @param user
+	 * @return User
+	 */
 	public User saveANewUser(@Valid User user) {
 
-<span class="nc" id="L35">		return userRepository.save(user);</span>
+<span class="nc" id="L56">		return userRepository.save(user);</span>
 
 	}
 
+	/**
+	 * &lt;b&gt;deleteAGivenUser permet de supprimer un User en fonction d'un ID fournit
+	 * par le formulaire.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Boolean
+	 */
 	public Boolean deleteAGivenUser(Integer id) {
 
-<span class="fc" id="L41">		Optional&lt;User&gt; foundItem = userRepository.findById(id);</span>
+<span class="fc" id="L70">		Optional&lt;User&gt; foundItem = userRepository.findById(id);</span>
 
-<span class="fc bfc" id="L43" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
 
-<span class="fc" id="L45">			return false;</span>
+<span class="fc" id="L74">			return false;</span>
 		} else {
 
-<span class="fc" id="L48">			userRepository.deleteById(id);</span>
-<span class="fc" id="L49">			return true;</span>
+<span class="fc" id="L77">			userRepository.deleteById(id);</span>
+<span class="fc" id="L78">			return true;</span>
 		}
 
 	}
 
+	/**
+	 * &lt;b&gt;updateAGivenUser permet de mettre à jour un User en fonction d'un User
+	 * fournit par le formulaire.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Boolean
+	 */
 	public Boolean updateAGivenUser(@Valid User user) {
 
-<span class="fc" id="L56">		Optional&lt;User&gt; foundItem = userRepository.findById(user.getId());</span>
+<span class="fc" id="L93">		Optional&lt;User&gt; foundItem = userRepository.findById(user.getId());</span>
 
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
 
-<span class="fc" id="L60">			return false;</span>
+<span class="fc" id="L97">			return false;</span>
 
 		} else {
 
-<span class="fc" id="L64">			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
-<span class="fc" id="L65">			user.setPassword(encoder.encode(user.getPassword()));</span>
-<span class="fc" id="L66">			userRepository.save(user);</span>
-<span class="fc" id="L67">			return true;</span>
+<span class="fc" id="L101">			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L102">			user.setPassword(encoder.encode(user.getPassword()));</span>
+<span class="fc" id="L103">			userRepository.save(user);</span>
+<span class="fc" id="L104">			return true;</span>
 
 		}
 
 	}
 
+	/**
+	 * &lt;b&gt;findSpecificUser permet de récupérer un User spécifique en fonction d'un
+	 * ID.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Trade
+	 */
 	public User findSpecificUser(Integer id) {
 
-<span class="nc" id="L75">		return userRepository.findById(id).get();</span>
+<span class="nc" id="L120">		return userRepository.findById(id).get();</span>
 	}
 
+	/**
+	 * &lt;b&gt;loadUserByUsername qui prend en argument un username vérifie si
+	 * l'utilisateur existe dans la base de donnée.&lt;/b&gt;
+	 * &lt;p&gt;
+	 * Si l'utilisateur n'existe pas dans la base de donnée, alors une
+	 * UsernameNotFoundException est renvoyé
+	 * &lt;/p&gt;
+	 * 
+	 * @throws UsernameNotFoundException
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		
-<span class="fc" id="L82">		User triesToAuthenticate = userRepository.findByUsername(username);</span>
+<span class="fc" id="L136">		User triesToAuthenticate = userRepository.findByUsername(username);</span>
 
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (triesToAuthenticate == null) {</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (triesToAuthenticate == null) {</span>
 
-<span class="nc" id="L86">			throw new UsernameNotFoundException(username);</span>
+<span class="fc" id="L140">			throw new UsernameNotFoundException(username);</span>
 
 		}
 
-<span class="fc" id="L90">		logger.info(&quot;/////////////////// IN USER SERVICES &quot; + triesToAuthenticate.getPassword() + &quot;/////&quot; + triesToAuthenticate.getRole() + &quot;///&quot; + triesToAuthenticate.getUsername());</span>
-<span class="fc" id="L91">		UserDetails user =  org.springframework.security.core.userdetails.User.withUsername(triesToAuthenticate.getUsername()).password(triesToAuthenticate.getPassword())</span>
-<span class="fc" id="L92">				.authorities(triesToAuthenticate.getRole()).build();</span>
+<span class="fc" id="L144">		UserDetails user = org.springframework.security.core.userdetails.User</span>
+<span class="fc" id="L145">				.withUsername(triesToAuthenticate.getUsername()).password(triesToAuthenticate.getPassword())</span>
+<span class="fc" id="L146">				.authorities(triesToAuthenticate.getRole()).build();</span>
 
-<span class="fc" id="L94">		return user;</span>
-		
+<span class="fc" id="L148">		return user;</span>
+
 	}
 
-
-
+	//
+	//
+	// Setters present solely for testing purposes, can be deleted afterwards.
+	//
+	//
 	public void setUserRepository(UserRepository userRepository) {
-<span class="fc" id="L101">		this.userRepository = userRepository;</span>
-<span class="fc" id="L102">	}</span>
+<span class="fc" id="L158">		this.userRepository = userRepository;</span>
+<span class="fc" id="L159">	}</span>
 
-	
-	
-	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

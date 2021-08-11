@@ -4,6 +4,29 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+/**
+ * <b>Rating est la classe représentant les notes des agences de notations pour
+ * l'application Poseidon.</b>
+ * 
+ * <p>
+ * Les instances de cette classe proviennent de la base de donnée indiquée dans
+ * le application.properties.
+ * </p>
+ * 
+ * <p>
+ * L'ensemble des attributs de cette classe proviennent d'une demande client.
+ * </p>
+ * 
+ * <p>
+ * Les attributs considérés comme obligatoires à la validation des formulaires
+ * par le client sont annotées @Min, @Max
+ * </p>
+ * 
+ * @see RatingController
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Entity
 @Table(name = "rating")
 public class Rating {
@@ -13,7 +36,6 @@ public class Rating {
 	@Column(name = "id")
 	private int Id;
 
-	
 	@Column(name = "moodysrating")
 	private String moodysRating;
 
@@ -23,8 +45,8 @@ public class Rating {
 	@Column(name = "fitchrating")
 	private String fitchRating;
 
-	@Min(value= 1 , message ="must not be null")
-	@Max(value=127, message ="cannot be above 127 for orderNumber")
+	@Min(value = 1, message = "must not be null")
+	@Max(value = 127, message = "cannot be above 127 for orderNumber")
 	@Column(name = "ordernumber")
 	private int orderNumber;
 
@@ -33,12 +55,12 @@ public class Rating {
 	}
 
 	public Rating(String moodysRating, String sandpRating, String fitchRating, int orderNumber) {
-			
+
 		this.moodysRating = moodysRating;
 		this.sandpRating = sandpRating;
 		this.fitchRating = fitchRating;
 		this.orderNumber = orderNumber;
-		
+
 	}
 
 	public int getId() {
@@ -49,8 +71,6 @@ public class Rating {
 		Id = id;
 	}
 
-
-
 	public String getMoodysRating() {
 		return moodysRating;
 	}
@@ -58,7 +78,6 @@ public class Rating {
 	public void setMoodysRating(String moodysRating) {
 		this.moodysRating = moodysRating;
 	}
-
 
 	public String getSandpRating() {
 		return sandpRating;

@@ -1,9 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.services.RatingServices;
 import com.nnk.springboot.services.TradeServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 /**
- * <b>TradeController est le controleur en charge du domaine 'Trade'.</b>
+ * <b>TradeController est le contrôleur en charge du domaine 'Trade'.</b>
  * <p>
  * Les méthodes CRUD sont les suivantes :
  * <ul>
  * <li>CREATE : validate.</li>
- * <li>READ : home (permettant de voire toutes les instances Trade) &
+ * <li>READ : home (permettant de voir toutes les instances Trade) &
  * showUpdateForm (permettant de lire une instance spécifique de Trade).</li>
  * <li>UPDATE : updateTrade.</li>
  * <li>DELETE : deleteTrade.</li>
@@ -146,7 +143,7 @@ public class TradeController {
 	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
 	 * </p>
 	 * <p>
-	 * L'instance de Trade est considérée valable grâces aux méthodes liées aux
+	 * L'instance de Trade est considérée valable grâce aux méthodes liées aux
 	 * annotations visibles dans le domaine.
 	 * </p>
 	 * 

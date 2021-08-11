@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 /**
- * <b>RatingController est le controleur en charge du domaine 'Rating'.</b>
+ * <b>RatingController est le contrôleur en charge du domaine 'Rating'.</b>
  * <p>
  * Les méthodes CRUD sont les suivantes :
  * <ul>
  * <li>CREATE : validate.</li>
- * <li>READ : home (permettant de voire toutes les instances Rating) &
+ * <li>READ : home (permettant de voir toutes les instances Rating) &
  * showUpdateForm (permettant de lire une instance spécifique de Rating).</li>
  * <li>UPDATE : updateRating.</li>
  * <li>DELETE : deleteRating.</li>
@@ -144,7 +144,7 @@ public class RatingController {
 	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
 	 * </p>
 	 * <p>
-	 * L'instance de Rating est considérée valable grâces aux méthodes liées aux
+	 * L'instance de Rating est considérée valable grâce aux méthodes liées aux
 	 * annotations visibles dans le domaine.
 	 * </p>
 	 * 
