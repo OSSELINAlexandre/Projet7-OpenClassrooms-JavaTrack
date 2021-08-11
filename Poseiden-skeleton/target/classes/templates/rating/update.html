@@ -8,8 +8,8 @@
 <link rel="stylesheet" href="/css/logoProp.css">
 
 </head>
-<body>
-<div class="container">
+<body class="d-flex flex-column">
+	<div class="container minContainerUpdateAdd">
 
 	<div class="row">
 		<h2>Update Rating</h2>
@@ -27,7 +27,7 @@
 			<input class ="w-100" type="number" min="1" max="127" text="${ratingToUpdate.orderNumber}" th:field="*{orderNumber}" required oninput="validity.valid||(value='');"></input>
 			<div class="mt-4">
 				<a th:href="@{/rating/list}" class="btn btn-danger ml-3">Cancel</a>
-				<button type="submit" class="btn btn-primary">update BidList</button>
+				<button type="submit" class="btn btn-primary">update Rating</button>
 			</div>
 		</form>
 	</div>

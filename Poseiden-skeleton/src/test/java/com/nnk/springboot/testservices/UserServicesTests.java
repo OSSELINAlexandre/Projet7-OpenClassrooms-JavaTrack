@@ -1,6 +1,8 @@
 package com.nnk.springboot.testservices;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -8,11 +10,13 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.services.UserServices;
@@ -25,6 +29,9 @@ public class UserServicesTests {
 	UserRepository userRepository; 
 
 
+	private ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+
+	
 	private UserServices userServices;
 	
 	
@@ -54,7 +61,10 @@ public class UserServicesTests {
 		
 		Boolean actual = userServices.updateAGivenUser(testItem);
 		
-		assertTrue(actual == true);
+		verify(userRepository, times(1)).save(userCaptor.capture());
+		User actualItem = userCaptor.getValue();
+		
+		assertTrue(actual == true && actualItem.getId() == 5);
 		
 	}
 	
@@ -74,6 +84,10 @@ public class UserServicesTests {
 				
 		Boolean actual = userServices.updateAGivenUser(testItem);
 		
+		
+		verify(userRepository, times(0)).save(userCaptor.capture());
+
+		
 		assertTrue(actual == false);
 		
 	}
@@ -92,6 +106,9 @@ public class UserServicesTests {
 		
 		Boolean actual = userServices.deleteAGivenUser(5);
 		
+		verify(userRepository, times(1)).deleteById(5);
+
+		
 		assertTrue(actual == true);
 		
 	}
@@ -108,10 +125,13 @@ public class UserServicesTests {
 				
 		Boolean actual = userServices.deleteAGivenUser(5);
 		
+		verify(userRepository, times(0)).deleteById(5);
+
+		
 		assertTrue(actual == false);
 		
 	}
-	
+
 	@Test
 	public void test_loadUserByUsername_ShouldReturnUserDetailsIfEverythingPass() {
 		

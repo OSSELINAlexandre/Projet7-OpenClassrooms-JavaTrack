@@ -1,31 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HomeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.controllers</a> &gt; <span class="el_source">HomeController.java</span></div><h1>HomeController.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.controllers;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-<span class="fc" id="L9">public class HomeController</span>
-{
-	@RequestMapping(&quot;/&quot;)
-	public String home(Model model)
-	{
-<span class="fc" id="L14">		return &quot;home&quot;;</span>
-	}
+import com.nnk.springboot.domain.CurvePoint;
+import com.nnk.springboot.services.CurvePointServices;
 
-	@RequestMapping(&quot;/admin/home&quot;)
-	public String adminHome(Model model)
-	{
-<span class="fc" id="L20">		return &quot;redirect:/bidList/list&quot;;</span>
+/**
+ * &lt;p&gt;HomeController est le contrôleur en charge du domaine 'Home'.&lt;/p&gt;
+ * 
+ * &lt;p&gt;Ce contrôleur centralise l'ensemble des points d'accueils existants pour les utilisateurs.
+ * Si des interfaces utilisateurs liées aux comptes devaient être crées, ce serait dans ce contrôleur. &lt;/p&gt;
+ * 
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
+@Controller
+<span class="fc" id="L23">public class HomeController {</span>
+
+<span class="fc" id="L25">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(HomeController.class);</span>
+
+	@RequestMapping(&quot;/&quot;)
+	public String home(Model model) {
+<span class="fc" id="L29">		return &quot;home&quot;;</span>
 	}
 	
-	@GetMapping(&quot;/login&quot;)
-	public String returnTheLoginPage() {
-		
-<span class="fc" id="L26">		return &quot;login&quot;;</span>
-	}
+	
+	
 
+	@RequestMapping(&quot;/admin/home&quot;)
+	public String adminHome(Model model) {
+<span class="fc" id="L37">		return &quot;redirect:/user/list&quot;;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

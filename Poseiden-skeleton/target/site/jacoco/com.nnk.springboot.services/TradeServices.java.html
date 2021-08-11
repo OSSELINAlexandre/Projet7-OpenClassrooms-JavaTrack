@@ -12,94 +12,143 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
 
-
+/**
+ * &lt;b&gt;TradeServices est le service permettant d'insérer la logique business dans
+ * le domaine métier Trade.&lt;/b&gt;
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Service
-<span class="fc" id="L17">public class TradeServices {</span>
-	
-<span class="fc" id="L19">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(TradeServices.class);</span>
-	
+<span class="fc" id="L23">public class TradeServices {</span>
+
+<span class="fc" id="L25">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(TradeServices.class);</span>
+
 	@Autowired
-	TradeRepository tradeRepository;
+	private TradeRepository tradeRepository;
 
+	/**
+	 * 
+	 * &lt;b&gt;findAllTrades retourne l'ensemble des Trade existant dans la base de
+	 * donnée.&lt;/b&gt;
+	 * 
+	 * @return List&lt;Trade&gt;
+	 */
 	public List&lt;Trade&gt; findAllTrades() {
-<span class="nc" id="L25">		return tradeRepository.findAll();</span>
+<span class="nc" id="L38">		return tradeRepository.findAll();</span>
 	}
-	
 
+	/**
+	 * 
+	 * &lt;b&gt;saveANewTrade permet de sauvegarder un Trade déjà validé au préalable dans
+	 * la base de donnée. &lt;/b&gt;
+	 * 
+	 * @param trade
+	 * @return Trade
+	 */
 	public Trade saveANewTrade(@Valid Trade trade) {
-		
-		
-<span class="nc" id="L32">		return tradeRepository.save(trade);</span>
-		
+
+<span class="nc" id="L51">		return tradeRepository.save(trade);</span>
+
 	}
 
-
+	/**
+	 * &lt;b&gt;findSpecificTrade permet de récupérer un Trade spécifique en fonction d'un
+	 * ID.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Trade
+	 */
 	public Trade findSpecificTrade(Integer id) {
-<span class="nc" id="L38">		return tradeRepository.findById(id).get();</span>
+<span class="nc" id="L64">		return tradeRepository.findById(id).get();</span>
 
 	}
 
+	/**
+	 * &lt;b&gt;updateAGivenTrade permet de mettre à jour un Trade en fonction d'un Trade
+	 * fournit par le formulaire.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Boolean
+	 */
 	public Boolean updateAGivenTrade(@Valid Trade trade) {
-		
-<span class="fc" id="L44">		Optional&lt;Trade&gt; foundItem = tradeRepository.findById(trade.getTradeId());</span>
-		
-<span class="fc bfc" id="L46" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
-			
-<span class="fc" id="L48">			return false;</span>
-			
-		}else {
-			
-<span class="fc" id="L52">			tradeRepository.save(trade);</span>
-<span class="fc" id="L53">			return true;</span>
-			
+
+<span class="fc" id="L78">		Optional&lt;Trade&gt; foundItem = tradeRepository.findById(trade.getTradeId());</span>
+
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
+
+<span class="fc" id="L82">			return false;</span>
+
+		} else {
+
+<span class="fc" id="L86">			tradeRepository.save(trade);</span>
+<span class="fc" id="L87">			return true;</span>
+
 		}
 	}
 
+	/**
+	 * &lt;b&gt;deleteAGivenTrade permet de supprimer un Trade en fonction d'un ID fournit
+	 * par le formulaire.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Boolean
+	 */
 	public Boolean deleteAGivenTrade(Integer id) {
-		
-<span class="fc" id="L60">		Optional&lt;Trade&gt; foundItem = tradeRepository.findById(id);</span>
-		
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
-			
-<span class="fc" id="L64">			return false;</span>
-			
-		}else {
-			
-<span class="fc" id="L68">			tradeRepository.deleteById(id);</span>
-<span class="fc" id="L69">			return true;</span>
-			
+
+<span class="fc" id="L102">		Optional&lt;Trade&gt; foundItem = tradeRepository.findById(id);</span>
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
+
+<span class="fc" id="L106">			return false;</span>
+
+		} else {
+
+<span class="fc" id="L110">			tradeRepository.deleteById(id);</span>
+<span class="fc" id="L111">			return true;</span>
+
 		}
 	}
 
-	
+	/**
+	 * setIfTradeIfASellOrABuy, utilisant un Trade validé, permet d'insérer les
+	 * paramètres dans les champs Achats ou Vente en fonction de l'input du client.
+	 * 
+	 * 
+	 * 
+	 * @param trade
+	 * @return
+	 */
 	public Trade setIfTradeIfASellOrABuy(@Valid Trade trade) {
-		
-		
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		if(trade.getBuyIsTrueSellIsFalse()) {</span>
-			
-<span class="fc" id="L80">			trade.setBuyPrice(trade.getPriceFromForm());</span>
-<span class="fc" id="L81">			trade.setBuyQuantity(trade.getQuantityFromForm());</span>
-<span class="fc" id="L82">			logger.info(&quot;======== was in buy&quot;);</span>
 
-			
-<span class="fc" id="L85">		}else {</span>
-			
-<span class="fc" id="L87">			trade.setSellPrice(trade.getPriceFromForm());</span>
-<span class="fc" id="L88">			trade.setSellQuantity(trade.getQuantityFromForm());</span>
-<span class="fc" id="L89">			logger.info(&quot;======== was in sell&quot;);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (trade.getBuyIsTrueSellIsFalse()) {</span>
+
+<span class="fc" id="L129">			trade.setBuyPrice(trade.getPriceFromForm());</span>
+<span class="fc" id="L130">			trade.setBuyQuantity(trade.getQuantityFromForm());</span>
+<span class="fc" id="L131">			logger.info(&quot;======== was in buy&quot;);</span>
+
+<span class="fc" id="L133">		} else {</span>
+
+<span class="fc" id="L135">			trade.setSellPrice(trade.getPriceFromForm());</span>
+<span class="fc" id="L136">			trade.setSellQuantity(trade.getQuantityFromForm());</span>
+<span class="fc" id="L137">			logger.info(&quot;======== was in sell&quot;);</span>
 		}
-		
-<span class="fc" id="L92">		return trade;</span>
-		
-		
+
+<span class="fc" id="L140">		return trade;</span>
+
 	}
 
-
+	//
+	//
+	// Setters present solely for testing purposes, can be deleted afterwards.
+	//
+	//
 	public void setTradeRepository(TradeRepository tradeRepository) {
-<span class="fc" id="L99">		this.tradeRepository = tradeRepository;</span>
-<span class="fc" id="L100">	}</span>
-	
-	
+<span class="fc" id="L150">		this.tradeRepository = tradeRepository;</span>
+<span class="fc" id="L151">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

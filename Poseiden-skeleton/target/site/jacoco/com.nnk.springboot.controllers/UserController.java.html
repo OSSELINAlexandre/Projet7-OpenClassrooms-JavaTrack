@@ -14,85 +14,190 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+/**
+ * &lt;b&gt;UserController est le contrôleur en charge du domaine 'User'.&lt;/b&gt;
+ * &lt;p&gt;
+ * Les méthodes CRUD sont les suivantes :
+ * &lt;ul&gt;
+ * &lt;li&gt;CREATE : validate.&lt;/li&gt;
+ * &lt;li&gt;READ : home (permettant de voir toutes les instances RuleName) &amp;
+ * showUpdateForm (permettant de lire une instance spécifique de RuleName).&lt;/li&gt;
+ * &lt;li&gt;UPDATE : updateRuleName.&lt;/li&gt;
+ * &lt;li&gt;DELETE : deleteRuleName.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Tous les templates sont entreposés dans les ressources.
+ * &lt;/p&gt;
+ * 
+ * @see User
+ * @see UserServices
+ * @see src/resources/templates/user
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Controller
-<span class="fc" id="L18">public class UserController {</span>
-	
+<span class="fc" id="L41">public class UserController {</span>
 
-
+	/**
+	 * Service lié au contrôleur UserController.
+	 */
 	@Autowired
 	private UserServices userServices;
-	
-	// READ
+
+	/**
+	 * 'home' permet d'exposer au client la liste de l'ensemble des instances de
+	 * 'User' ayant eu lieu et enregistrés dans la base de données.
+	 * 
+	 * La méthode permet d'appeler le service pour récupérer depuis la base de
+	 * donnée la liste en question et de l'insérer dans le modèle.
+	 * 
+	 * 
+	 * @param model
+	 * @return user/list
+	 */
 	@RequestMapping(&quot;/user/list&quot;)
 	public String home(Model model) {
-		
-<span class="fc" id="L29">		model.addAttribute(&quot;users&quot;, userServices.findAllUsers());</span>
-<span class="fc" id="L30">		return &quot;user/list&quot;;</span>
-		
+
+<span class="fc" id="L63">		model.addAttribute(&quot;users&quot;, userServices.findAllUsers());</span>
+<span class="fc" id="L64">		return &quot;user/list&quot;;</span>
+
 	}
 
+	/**
+	 * 'addUser' permet d'appeler le formulaire assurant la création d'un nouveau
+	 * 'User'.
+	 * 
+	 * @param user
+	 * @return user/add
+	 */
 	@GetMapping(&quot;/user/add&quot;)
-	public String addUser(User bid) {
-<span class="fc" id="L36">		return &quot;user/add&quot;;</span>
+	public String addUser(User user) {
+<span class="fc" id="L77">		return &quot;user/add&quot;;</span>
 	}
 
-	// CREATE
+	/**
+	 * 'validate' [CREATE] appeler depuis le formulaire d'ajout, permet d'aiguiller
+	 * en fonction d'une erreur ou non vers les pages correspondantes. Ces erreurs
+	 * sont renvoyés directement depuis le template grâces aux méthodes liées aux
+	 * annotations dans le modèle de RuleName.
+	 * 
+	 * &lt;P&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;Si une erreur est présente (informations renvoyées directement depuis le
+	 * template) nous retournons la page initiale de création d'un nouveau 'User'
+	 * dans lequel les erreurs seront affichées.&lt;/li&gt;
+	 * 
+	 * 
+	 * 
+	 * &lt;li&gt;Si aucune erreur est présente (informations renvoyées directement depuis
+	 * le template),,le service enregistre la nouvelle instance avec le cryptage
+	 * d'un mot de passe l'aiguilleur redirige vers la page de présentation de
+	 * l'ensemble des 'User'.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @see User
+	 * @param user
+	 * @param result
+	 * @param model
+	 * @return redirect:/user/list
+	 */
 	@PostMapping(&quot;/user/validate&quot;)
 	public String validate(@Valid User user, BindingResult result, Model model) {
 
-<span class="fc bfc" id="L43" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
 
-<span class="fc" id="L45">			return &quot;user/add&quot;;</span>
+<span class="fc" id="L113">			return &quot;user/add&quot;;</span>
 
 		} else {
 
-<span class="fc" id="L49">			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
-<span class="fc" id="L50">			user.setPassword(encoder.encode(user.getPassword()));</span>
-<span class="fc" id="L51">			userServices.saveANewUser(user);</span>
-<span class="fc" id="L52">			return &quot;redirect:/user/list&quot;;</span>
+<span class="fc" id="L117">			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L118">			user.setPassword(encoder.encode(user.getPassword()));</span>
+<span class="fc" id="L119">			userServices.saveANewUser(user);</span>
+<span class="fc" id="L120">			return &quot;redirect:/user/list&quot;;</span>
 		}
 
 	}
 
-	// READ
+	/**
+	 * showUpdateForm appeler depuis la liste des instances de 'User' en BDD, permet
+	 * à partir d'un ID d'une instance de User, de présenter le formulaire de
+	 * modification de l'instance du User en question. Cette méthode permet
+	 * d'ajouter au 'model' l'instance spécifique en question grâce au service.
+	 * 
+	 * @param id
+	 * @param model
+	 * @return update
+	 */
 	@GetMapping(&quot;/user/update/{id}&quot;)
 	public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 
-<span class="fc" id="L61">		model.addAttribute(&quot;user&quot;, userServices.findSpecificUser(id));</span>
+<span class="fc" id="L138">		model.addAttribute(&quot;user&quot;, userServices.findSpecificUser(id));</span>
 
-<span class="fc" id="L63">		return &quot;user/update&quot;;</span>
+<span class="fc" id="L140">		return &quot;user/update&quot;;</span>
 	}
 
-	// UPDATE
+	/**
+	 * &lt;p&gt;
+	 * updateRuleName [UPDATE] permet, depuis une instance valide de User, de
+	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
+	 * &lt;/p&gt;
+	 * &lt;p&gt;
+	 * L'instance de User est considérée valable grâces aux méthodes liées aux
+	 * annotations visibles dans le domaine.
+	 * &lt;/p&gt;
+	 * 
+	 * @see User
+	 * 
+	 * @param id
+	 * @param user
+	 * @param result
+	 * @param model
+	 * @return redirect:/user/list
+	 */
 	@PostMapping(&quot;/user/update/{id}&quot;)
-    public String updateUser(@PathVariable(&quot;id&quot;) Integer id, @Valid User user,
-                             BindingResult result, Model model) {
-    
-<span class="fc" id="L71">    	user.setId(id);</span>
-<span class="fc" id="L72">		userServices.updateAGivenUser(user);</span>
+	public String updateUser(@PathVariable(&quot;id&quot;) Integer id, @Valid User user, BindingResult result, Model model) {
 
-<span class="fc" id="L74">	    return &quot;redirect:/user/list&quot;;</span>
-	
-    }
+<span class="fc" id="L164">		user.setId(id);</span>
+<span class="fc" id="L165">		userServices.updateAGivenUser(user);</span>
 
-	// DELETE
+<span class="fc" id="L167">		return &quot;redirect:/user/list&quot;;</span>
+
+	}
+
+	/**
+	 * &lt;p&gt;
+	 * deleteCurve [DELETE], appeler depuis la liste, permet de supprimer une
+	 * instance de User, spécifiée par l'ID, de la base de donnée.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * Seuls des instances valables sont déjà enregistrés dans la base de donnée et
+	 * afficher dans la liste, ainsi l'instance spécifiée par l'ID et devant être
+	 * supprimé est de ce fait valable.
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @param model
+	 * @return redirect:/ruleName/list
+	 */
 	@GetMapping(&quot;/user/delete/{id}&quot;)
 	public String deleteUser(@PathVariable(&quot;id&quot;) Integer id, Model model) {
-		
-<span class="fc" id="L82">		userServices.deleteAGivenUser(id);</span>
-		
-		
-<span class="fc" id="L85">		return &quot;redirect:/user/list&quot;;</span>
+
+<span class="fc" id="L191">		userServices.deleteAGivenUser(id);</span>
+
+<span class="fc" id="L193">		return &quot;redirect:/user/list&quot;;</span>
 	}
 
-	
 	// SETTER solely needed for testing purposes, can be deleted without incident on
 	// code.
 	public void setUserServices(UserServices userServices) {
-<span class="fc" id="L92">		this.userServices = userServices;</span>
-<span class="fc" id="L93">	}</span>
-	
-	
-	
+<span class="fc" id="L199">		this.userServices = userServices;</span>
+<span class="fc" id="L200">	}</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

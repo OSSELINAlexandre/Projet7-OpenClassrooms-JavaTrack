@@ -11,68 +11,112 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
 
+/**
+ * &lt;b&gt;RatingServices est le service permettant d'insérer la logique business
+ * dans le domaine métier Rating.&lt;/b&gt;
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Service
-<span class="fc" id="L15">public class RatingServices {</span>
-	
-	
-	
+<span class="fc" id="L22">public class RatingServices {</span>
+
 	@Autowired
-	RatingRepository ratingRepository;
+	private RatingRepository ratingRepository;
 
-
-	
+	/**
+	 * 
+	 * &lt;b&gt;findAllRatings retourne l'ensemble des Rating existant dans la base de
+	 * donnée.&lt;/b&gt;
+	 * 
+	 * @return List&lt;Rating&gt;
+	 */
 	public List&lt;Rating&gt; findAllRatings() {
 
-<span class="nc" id="L26">		return ratingRepository.findAll();</span>
+<span class="nc" id="L36">		return ratingRepository.findAll();</span>
 	}
 
+	/**
+	 * 
+	 * &lt;b&gt;saveANewRating permet de sauvegarder un Rating déjà validé au préalable
+	 * dans la base de donnée. &lt;/b&gt;
+	 * 
+	 * @param rating
+	 * @return Rating
+	 */
 	public Rating saveANewRating(@Valid Rating rating) {
 
-<span class="nc" id="L31">		return ratingRepository.save(rating);</span>
+<span class="nc" id="L49">		return ratingRepository.save(rating);</span>
 	}
 
+	/**
+	 * &lt;b&gt;findSpecificRating permet de récupérer un Rating spécifique en fonction
+	 * d'un ID.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Rating
+	 */
 	public Rating findSpecificRating(Integer id) {
-<span class="nc" id="L35">		return ratingRepository.findById(id).get();</span>
+<span class="nc" id="L61">		return ratingRepository.findById(id).get();</span>
 	}
 
+	/**
+	 * &lt;b&gt;updateAGivenRating permet de mettre à jour un Rating en fonction d'un
+	 * Rating fournit par le formulaire.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Boolean
+	 */
 	public Boolean updateAGivenRating(@Valid Rating rating) {
-		
-<span class="fc" id="L40">		Optional&lt;Rating&gt; foundItem = ratingRepository.findById(rating.getId());</span>
-		
-<span class="fc bfc" id="L42" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
-			
-<span class="fc" id="L44">			return false;</span>
-			
-		}else {
-			
-<span class="fc" id="L48">			ratingRepository.save(rating);</span>
-<span class="fc" id="L49">			return true;</span>
-			
+
+<span class="fc" id="L74">		Optional&lt;Rating&gt; foundItem = ratingRepository.findById(rating.getId());</span>
+
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
+
+<span class="fc" id="L78">			return false;</span>
+
+		} else {
+
+<span class="fc" id="L82">			ratingRepository.save(rating);</span>
+<span class="fc" id="L83">			return true;</span>
+
 		}
 	}
 
+	/**
+	 * &lt;b&gt;deleteAGivenRating permet de supprimer un Rating en fonction d'un ID
+	 * fournit par le formulaire.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Boolean
+	 */
 	public Boolean deleteAGivenRating(Integer id) {
 
-<span class="fc" id="L56">		Optional&lt;Rating&gt; foundItem = ratingRepository.findById(id);</span>
-		
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
-			
-<span class="fc" id="L60">			return false;</span>
-			
-		}else {
-			
-<span class="fc" id="L64">			ratingRepository.deleteById(id);</span>
-<span class="fc" id="L65">			return true;</span>
-			
+<span class="fc" id="L98">		Optional&lt;Rating&gt; foundItem = ratingRepository.findById(id);</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
+
+<span class="fc" id="L102">			return false;</span>
+
+		} else {
+
+<span class="fc" id="L106">			ratingRepository.deleteById(id);</span>
+<span class="fc" id="L107">			return true;</span>
+
 		}
 	}
 
+	//
+	//
+	// Setters present solely for testing purposes, can be deleted afterwards.
+	//
+	//
 	public void setRatingRepository(RatingRepository ratingRepository) {
-<span class="fc" id="L71">		this.ratingRepository = ratingRepository;</span>
-<span class="fc" id="L72">	}</span>
-	
-	
-	
+<span class="fc" id="L118">		this.ratingRepository = ratingRepository;</span>
+<span class="fc" id="L119">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

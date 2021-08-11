@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-      <title>Spring Boot</title>
+	<title>Spring Boot</title>
+	<link rel="stylesheet" href="/css/bootstrap.css">
+
 </head>
+
 <body>
-   <h3>Access Denied Exception</h3>
-   <div>
-	    Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
-	    <form th:action="@{/app-logout}" method="POST">
-	         <input type="submit" value="Logout"/>
-	    </form>
-   </div> 	 
-    <p class="error" th:text="${errorMsg}">Error</p>
+	<h3>Access Denied Exception</h3>
+	<div>
+	</div>
+	<p class="text-danger">You do not have the proper priviledge to access this webpage.</p>
+	<p class="text-danger">Contact admin if you need to upgrade your priviledge.</p>
+	<p class="text-danger">return to previous page or type the URL wanted.</p>
 </body>
-</html>   
+
+</html>

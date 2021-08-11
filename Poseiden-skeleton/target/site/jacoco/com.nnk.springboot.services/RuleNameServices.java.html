@@ -12,70 +12,114 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RuleNameRepository;
 
+/**
+ * &lt;b&gt;RuleNameServices est le service permettant d'insérer la logique business
+ * dans le domaine métier RuleName.&lt;/b&gt;
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Service
-<span class="fc" id="L16">public class RuleNameServices {</span>
-	
-<span class="fc" id="L18">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(RuleNameServices.class);</span>
+<span class="fc" id="L23">public class RuleNameServices {</span>
 
-	
+<span class="fc" id="L25">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(RuleNameServices.class);</span>
+
 	@Autowired
-	RuleNameRepository ruleNameRepository;
+	private RuleNameRepository ruleNameRepository;
 
+	/**
+	 * 
+	 * &lt;b&gt;findAllRules retourne l'ensemble des RuleName existant dans la base de
+	 * donnée.&lt;/b&gt;
+	 * 
+	 * @return List&lt;RuleName&gt;
+	 */
 	public List&lt;RuleName&gt; findAllRules() {
-		
-		
-<span class="nc" id="L27">		return ruleNameRepository.findAll();</span>
+
+<span class="nc" id="L39">		return ruleNameRepository.findAll();</span>
 	}
 
+	/**
+	 * 
+	 * &lt;b&gt;saveANewRule permet de sauvegarder un RuleName déjà validé au préalable
+	 * dans la base de donnée. &lt;/b&gt;
+	 * 
+	 * @param ruleName
+	 * @return RuleName
+	 */
 	public RuleName saveANewRule(@Valid RuleName ruleName) {
-		
-<span class="nc" id="L32">		return ruleNameRepository.save(ruleName);</span>
+
+<span class="nc" id="L52">		return ruleNameRepository.save(ruleName);</span>
 	}
-
-
+	/**
+	 * &lt;b&gt;deleteAGivenRule permet de supprimer un RuleName en fonction d'un ID
+	 * fournit par le formulaire.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Boolean
+	 */
 	public Boolean deleteAGivenRule(Integer id) {
-		
-<span class="fc" id="L38">		Optional&lt;RuleName&gt;  foundItem = ruleNameRepository.findById(id);</span>
-		
-<span class="fc bfc" id="L40" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
-			
-<span class="fc" id="L42">			return false;</span>
-			
-		}else {
-			
-<span class="fc" id="L46">			ruleNameRepository.deleteById(id);</span>
-<span class="fc" id="L47">			return true;</span>
-			
+
+<span class="fc" id="L64">		Optional&lt;RuleName&gt; foundItem = ruleNameRepository.findById(id);</span>
+
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
+
+<span class="fc" id="L68">			return false;</span>
+
+		} else {
+
+<span class="fc" id="L72">			ruleNameRepository.deleteById(id);</span>
+<span class="fc" id="L73">			return true;</span>
+
 		}
 	}
-	
+
+	/**
+	 * &lt;b&gt;updateAGivenRule permet de mettre à jour un RuleName en fonction d'un
+	 * RuleName fournit par le formulaire.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return Boolean
+	 */
 	public Boolean updateAGivenRule(@Valid RuleName ruleName) {
-		
-<span class="fc" id="L54">		Optional&lt;RuleName&gt; foundItem = ruleNameRepository.findById(ruleName.getId());</span>
-		
-<span class="fc bfc" id="L56" title="All 2 branches covered.">		if(foundItem.isEmpty()) {</span>
-			
-<span class="fc" id="L58">			return false;</span>
-			
-		}else {
-			
-<span class="fc" id="L62">			ruleNameRepository.save(ruleName);</span>
-<span class="fc" id="L63">			logger.info(&quot;=====|||||====&quot; + foundItem.get().getId());</span>
-<span class="fc" id="L64">			return true;</span>
-			
+
+<span class="fc" id="L88">		Optional&lt;RuleName&gt; foundItem = ruleNameRepository.findById(ruleName.getId());</span>
+
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (foundItem.isEmpty()) {</span>
+
+<span class="fc" id="L92">			return false;</span>
+
+		} else {
+
+<span class="fc" id="L96">			ruleNameRepository.save(ruleName);</span>
+<span class="fc" id="L97">			logger.info(&quot;=====|||||====&quot; + foundItem.get().getId());</span>
+<span class="fc" id="L98">			return true;</span>
+
 		}
 	}
-	
-	
+
+	/**
+	 * &lt;b&gt;findSpecificRule permet de récupérer un RuleName spécifique en fonction
+	 * d'un ID.&lt;/b&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @return RuleName
+	 */
 	public RuleName findSpecificRule(Integer id) {
-<span class="nc" id="L71">		return ruleNameRepository.findById(id).get();</span>
+<span class="nc" id="L112">		return ruleNameRepository.findById(id).get();</span>
 	}
-
+	
+	//
+	//
+	// Setters present solely for testing purposes, can be deleted afterwards.
+	//
+	//
 	public void setRuleNameRepository(RuleNameRepository ruleNameRepository) {
-<span class="fc" id="L75">		this.ruleNameRepository = ruleNameRepository;</span>
-<span class="fc" id="L76">	}</span>
+<span class="fc" id="L121">		this.ruleNameRepository = ruleNameRepository;</span>
+<span class="fc" id="L122">	}</span>
 
-	
-	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

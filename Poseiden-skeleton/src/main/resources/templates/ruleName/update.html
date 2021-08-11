@@ -9,8 +9,8 @@
 
 </head>
 
-<body>
-	<div class="container">
+<body class="d-flex flex-column">
+	<div class="container minContainerUpdateAdd">
 
 		<div class="row">
 			<h2>Update New Rule</h2>
@@ -35,7 +35,7 @@
 				<input class="w-100" type="text" text="${RuleToUpdate.sqlPart}" th:field="*{sqlPart}" required></input>
 				<div class="mt-4">
 					<a th:href="@{/ruleName/list}" class="btn btn-danger ml-3">Cancel</a>
-					<button type="submit" class="btn btn-primary">update BidList</button>
+					<button type="submit" class="btn btn-primary">update Rule</button>
 				</div>
 		</div>
 

@@ -14,91 +14,192 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-
+/**
+ * &lt;b&gt;BidListController est le contrôleur en charge du domaine 'BidList'.&lt;/b&gt;
+ * &lt;p&gt;
+ * Les méthodes CRUD sont les suivantes :
+ * &lt;ul&gt;
+ * &lt;li&gt;CREATE : validate.&lt;/li&gt;
+ * &lt;li&gt;READ : home (permettant de voir toutes les instances BidList) &amp;
+ * showUpdateForm (permettant de lire une instance spécifique de BidList).&lt;/li&gt;
+ * &lt;li&gt;UPDATE : updateBid.&lt;/li&gt;
+ * &lt;li&gt;DELETE : deleteBid.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Tous les templates sont entreposés dans les ressources.
+ * &lt;/p&gt;
+ * 
+ * @see BidList
+ * @see BidListServices
+ * @see src/resources/templates/bidList
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Controller
-<span class="fc" id="L19">public class BidListController {</span>
-	
+<span class="fc" id="L41">public class BidListController {</span>
 
-	
+	/**
+	 * Service lié au contrôleur BidListController.
+	 */
 	@Autowired
-	BidListServices bidListServices;
-	
+	private BidListServices bidListServices;
 
-	//READ
-    @RequestMapping(&quot;/bidList/list&quot;)
-    public String home(Model model)
-    {
-    	
-<span class="fc" id="L32">    	model.addAttribute(&quot;listAllBids&quot;, bidListServices.findAllBids());</span>
-<span class="fc" id="L33">        return &quot;bidList/list&quot;;</span>
-    }
+	/**
+	 * &lt;p&gt;
+	 * 'home' permet d'exposer au client la liste de l'ensemble des instances
+	 * de'BidsList' ayant eu lieu et enregistrés dans la base de données.
+	 * &lt;/p&gt;
+	 * 
+	 * &lt;p&gt;
+	 * La méthode permet d'appeler le service pour récupérer depuis la base de
+	 * donnée la liste en question et de l'insérer dans le modèle.
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @param model
+	 * @return bidList/list
+	 */
+	@RequestMapping(&quot;/bidList/list&quot;)
+	public String home(Model model) {
+<span class="fc" id="L66">		model.addAttribute(&quot;listAllBids&quot;, bidListServices.findAllBids());</span>
+<span class="fc" id="L67">		return &quot;bidList/list&quot;;</span>
 
+	}
 
-    @GetMapping(&quot;/bidList/add&quot;)
-    public String addBidForm(BidList bid) {
-<span class="fc" id="L39">        return &quot;bidList/add&quot;;</span>
-    }
+	/**
+	 * 'addBidForm' permet d'appeler le formulaire assurant la création d'un nouveau
+	 * 'BidList'.
+	 * 
+	 * @param bid
+	 * @return bidList/add
+	 */
+	@GetMapping(&quot;/bidList/add&quot;)
+	public String addBidForm(BidList bid) {
+<span class="fc" id="L80">		return &quot;bidList/add&quot;;</span>
 
-    //CREATE
-    @PostMapping(&quot;/bidList/validate&quot;)
-    public String validate(@Valid BidList bid, BindingResult result, Model model) {
-    	
-<span class="fc bfc" id="L46" title="All 2 branches covered.">    	if(result.hasErrors()) {</span>
-    		
-<span class="fc" id="L48">            return &quot;bidList/add&quot;;</span>
+	}
 
-    	}
-    	
-<span class="fc" id="L52">    	bidListServices.saveANewBid(bid);</span>
-    	
-<span class="fc" id="L54">        return &quot;redirect:/bidList/list&quot;;</span>
-    }
+	/**
+	 * 'validate' [CREATE] appeler depuis le formulaire d'ajout, permet d'aiguiller
+	 * en fonction d'une erreur ou non vers les pages correspondantes. Ces erreurs
+	 * sont renvoyés directement depuis le template grâces aux méthodes liées aux
+	 * annotations dans le modèle de BidList.
+	 * 
+	 * &lt;P&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;Si une erreur est présente (informations renvoyées directement depuis le
+	 * template) nous retournons la page initiale de création d'un nouveau 'BidList'
+	 * dans lequel les erreurs seront affichées.&lt;/li&gt;
+	 * 
+	 * 
+	 * 
+	 * &lt;li&gt;Si aucune erreur est présente (informations renvoyées directement depuis
+	 * le template),le service enregistre la nouvelle instance et l'aiguilleur
+	 * redirige vers la page de présentation de l'ensemble des 'BidList'.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @see BidList
+	 * @param bid
+	 * @param result
+	 * @param model
+	 * @return redirect:/bidList/list
+	 */
+	@PostMapping(&quot;/bidList/validate&quot;)
+	public String validate(@Valid BidList bid, BindingResult result, Model model) {
 
-    //READ
-    @GetMapping(&quot;/bidList/update/{id}&quot;)
-    public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
-    	
-    	
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
 
-<span class="fc" id="L63">        model.addAttribute(&quot;bidListToUpdate&quot;, bidListServices.findSpecificBid(id));</span>
-    	
-<span class="fc" id="L65">        return &quot;bidList/update&quot;;</span>
-    }
+<span class="fc" id="L116">			return &quot;bidList/add&quot;;</span>
 
-    
-    //UPDATE
-    @PostMapping(&quot;/bidList/update/{id}&quot;)
-    public String updateBid(@PathVariable(&quot;id&quot;) Integer id, @Valid BidList bidList,
-                             BindingResult result, Model model) {
-    	
-<span class="fc" id="L74">    	bidList.setBidlistid(id);</span>
-<span class="fc" id="L75">    	bidListServices.updateAGivenBid(bidList);</span>
+		}
 
-	
-    		
-<span class="fc" id="L79">        return &quot;redirect:/bidList/list&quot;;</span>
-            
-    	
-    }
+<span class="fc" id="L120">		bidListServices.saveANewBid(bid);</span>
 
-    //DELETE
-    @GetMapping(&quot;/bidList/delete/{id}&quot;)
-    public String deleteBid(@PathVariable(&quot;id&quot;) Integer id, Model model) {
-        
-<span class="fc" id="L88">    	bidListServices.deleteAGivenBid(id);</span>
-    	
-    		
-<span class="fc" id="L91">        return &quot;redirect:/bidList/list&quot;;</span>
-    	
-    }
-    
-    
-    //SETTER solely needed for testing purposes, can be deleted without incident on code.
+<span class="fc" id="L122">		return &quot;redirect:/bidList/list&quot;;</span>
+	}
+
+	/**
+	 * showUpdateForm appeler depuis la liste des instances de 'BidList' en BDD,
+	 * permet à partir d'un ID d'une instance de BidList, de présenter le formulaire
+	 * de modification de l'instance du Bid en question. Cette méthode permet
+	 * d'ajouter au 'model' l'instance spécifique en question grâce au service.
+	 * 
+	 * @param id
+	 * @param model
+	 * @return update
+	 */
+	@GetMapping(&quot;/bidList/update/{id}&quot;)
+	public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+
+<span class="fc" id="L138">		model.addAttribute(&quot;bidListToUpdate&quot;, bidListServices.findSpecificBid(id));</span>
+
+<span class="fc" id="L140">		return &quot;bidList/update&quot;;</span>
+	}
+
+	/**
+	 * &lt;p&gt;
+	 * updateBid [UPDATE] permet, depuis une instance valide de 'BidList', de
+	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
+	 * &lt;/p&gt;
+	 * &lt;p&gt;
+	 * L'instance de BidList est considérée valable grâce aux méthodes liées aux
+	 * annotations visibles dans le domaine.
+	 * &lt;/p&gt;
+	 * 
+	 * @see BidList
+	 * 
+	 * @param id
+	 * @param bidList
+	 * @param result
+	 * @param model
+	 * @return redirect:/bidList/list
+	 */
+	@PostMapping(&quot;/bidList/update/{id}&quot;)
+	public String updateBid(@PathVariable(&quot;id&quot;) Integer id, @Valid BidList bidList, BindingResult result, Model model) {
+
+<span class="fc" id="L164">		bidList.setBidlistid(id);</span>
+<span class="fc" id="L165">		bidListServices.updateAGivenBid(bidList);</span>
+
+<span class="fc" id="L167">		return &quot;redirect:/bidList/list&quot;;</span>
+
+	}
+
+	/**
+	 * &lt;p&gt;
+	 * deleteBid [DELETE], appeler depuis la liste, permet de supprimer une instance
+	 * de BidList, spécifiée par l'ID, de la base de donnée.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * Seuls des instances valables sont déjà enregistrés dans la base de donnée et
+	 * afficher dans la liste, ainsi l'instance spécifiée par l'ID et devant être
+	 * supprimée est de ce fait valable.
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @param model
+	 * @return redirect:/bidList/list
+	 */
+	@GetMapping(&quot;/bidList/delete/{id}&quot;)
+	public String deleteBid(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+
+<span class="fc" id="L191">		bidListServices.deleteAGivenBid(id);</span>
+
+<span class="fc" id="L193">		return &quot;redirect:/bidList/list&quot;;</span>
+
+	}
+
+	// SETTER solely needed for testing purposes, can be deleted without incident on
+	// code.
 
 	public void setBidListServices(BidListServices bidListServices) {
-<span class="fc" id="L99">		this.bidListServices = bidListServices;</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L201">		this.bidListServices = bidListServices;</span>
+<span class="fc" id="L202">	}</span>
 
-    
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,93 +1,112 @@
 package com.nnk.springboot.domain;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
-
+/**
+ * <b>BidList est la classe représentant les offres d'actifs pour l'application
+ * Poseidon.</b>
+ * 
+ * <p>
+ * Les instances de cette classe proviennent de la base de donnée indiquée dans
+ * le application.properties.
+ * </p>
+ * 
+ * <p>
+ * L'ensemble des attributs de cette classe proviennent d'une demande client.
+ * </p>
+ * 
+ * <p>
+ * Les attributs considérés comme obligatoires à la validation des formulaires
+ * par le client sont annotées @NotBlank
+ * </p>
+ * 
+ * @see BidListController
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Entity
 @Table(name = "bidlist")
 public class BidList {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bidlistid")
 	private int bidlistid;
 
-	@NotBlank( message="Account is mandatory")
+	@NotBlank(message = "Account is mandatory")
 	@Column(name = "account")
 	private String account;
-	
-	@NotBlank( message="Type is mandatory")
-	@Column(name="type")
-	private String type;
-	
-	@Column(name="bidquantity")
-	private Double bidQuantity;
-	
-	@Column(name="askquantity")
-	private Double askQuantity;
-	
-	@Column(name="bid")
-	private Double bid;
-	
-	@Column(name="ask")
-	private Double ask;
-	
-	@Column(name="benchmark")
-	private String benchmark;
-	
-	@Column(name="bidlistdate")
-	private Timestamp bidListDate;
-	
-	@Column(name="commentary")
-	private String commentary;
-	
-	@Column(name="security")
-	private String security;
-	
-	@Column(name="status")
-	private String status;
-	
-	@Column(name="trader")
-	private String trader;
-	
-	@Column(name="book")
-	private String book;
-	
-	@Column(name="creationname")
-	private String creationName;
-	
-	@Column(name="creationdate")
-	private Timestamp creationDate;
-	
-	@Column(name="revisionname")
-	private String revisionName;
-	
-	@Column(name="revisiondate")
-	private Timestamp revisionDate;
-	
-	@Column(name="dealname")
-	private String dealName;
-	
-	@Column(name="dealtype")
-	private String dealType;
-	
-	@Column(name="sourcelistid")
-	private String sourceListId;
-	
-	@Column(name="side")
-	private String side;
 
+	@NotBlank(message = "Type is mandatory")
+	@Column(name = "type")
+	private String type;
+
+	@Column(name = "bidquantity")
+	private Double bidQuantity;
+
+	@Column(name = "askquantity")
+	private Double askQuantity;
+
+	@Column(name = "bid")
+	private Double bid;
+
+	@Column(name = "ask")
+	private Double ask;
+
+	@Column(name = "benchmark")
+	private String benchmark;
+
+	@Column(name = "bidlistdate")
+	private Timestamp bidListDate;
+
+	@Column(name = "commentary")
+	private String commentary;
+
+	@Column(name = "security")
+	private String security;
+
+	@Column(name = "status")
+	private String status;
+
+	@Column(name = "trader")
+	private String trader;
+
+	@Column(name = "book")
+	private String book;
+
+	@Column(name = "creationname")
+	private String creationName;
+
+	@Column(name = "creationdate")
+	private Timestamp creationDate;
+
+	@Column(name = "revisionname")
+	private String revisionName;
+
+	@Column(name = "revisiondate")
+	private Timestamp revisionDate;
+
+	@Column(name = "dealname")
+	private String dealName;
+
+	@Column(name = "dealtype")
+	private String dealType;
+
+	@Column(name = "sourcelistid")
+	private String sourceListId;
+
+	@Column(name = "side")
+	private String side;
 
 	public BidList() {
 		super();
 	}
 
 	public BidList(String account, String type, double bidQuantity) {
-		
+
 		this.account = account;
 		this.type = type;
 		this.bidQuantity = bidQuantity;
@@ -268,8 +287,5 @@ public class BidList {
 	public void setSide(String side) {
 		this.side = side;
 	}
-	
-	
-	
 
 }

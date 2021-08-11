@@ -1,6 +1,8 @@
 package com.nnk.springboot.testservices;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -8,6 +10,7 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,6 +29,10 @@ public class CurvePointServicesTests {
 	CurvePointRepository curvePointRepository;
 
 
+	
+	private ArgumentCaptor<CurvePoint> curvePointCaptor = ArgumentCaptor.forClass(CurvePoint.class);
+
+	
 	private CurvePointServices curvePointServices;
 	
 
@@ -55,7 +62,12 @@ public class CurvePointServicesTests {
 		
 		Boolean actual = curvePointServices.updateAGivenCurvePoint(testItem);
 		
-		assertTrue(actual == true);
+		
+		verify(curvePointRepository, times(1)).save(curvePointCaptor.capture());
+		CurvePoint actualItem = curvePointCaptor.getValue();
+		
+		
+		assertTrue(actual == true && actualItem.getId() == 5);
 		
 	}
 	
@@ -74,6 +86,10 @@ public class CurvePointServicesTests {
 		testItem.setId(5);
 				
 		Boolean actual = curvePointServices.updateAGivenCurvePoint(testItem);
+		
+		
+		verify(curvePointRepository, times(0)).save(curvePointCaptor.capture());
+
 		
 		assertTrue(actual == false);
 		
@@ -95,6 +111,10 @@ public class CurvePointServicesTests {
 		
 		Boolean actual = curvePointServices.deleteAGivenCurvePoint(5);
 		
+		
+		verify(curvePointRepository, times(1)).findById(5);
+		verify(curvePointRepository, times(1)).deleteById(5);
+		
 		assertTrue(actual == true);
 		
 	}
@@ -114,6 +134,9 @@ public class CurvePointServicesTests {
 		testItem.setId(5);
 				
 		Boolean actual = curvePointServices.deleteAGivenCurvePoint(5);
+		
+		verify(curvePointRepository, times(1)).findById(5);
+		verify(curvePointRepository, times(0)).deleteById(5);
 		
 		assertTrue(actual == false);
 		

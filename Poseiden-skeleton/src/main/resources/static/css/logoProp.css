@@ -1,7 +1,16 @@
-.positioning
-{
-	
-    position: fixed;
-    right: 0px;
-    bottom: 0px;
+.positioning {
+	width: 15vw;
+	align-self: flex-end;
+}
+
+.tableMin {
+	min-height: 70vh;
+}
+
+.minContainer {
+	min-height: 78vh;
+}
+
+.minContainerUpdateAdd {
+	min-height: 80vh;
 }

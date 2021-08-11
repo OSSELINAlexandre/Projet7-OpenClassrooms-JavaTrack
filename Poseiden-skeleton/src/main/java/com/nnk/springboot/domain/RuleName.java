@@ -3,6 +3,29 @@ package com.nnk.springboot.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * <b>RuleName est la classe représentant les règles à appliquer pour les actifs
+ * pour l'application Poseidon.</b>
+ * 
+ * <p>
+ * Les instances de cette classe proviennent de la base de donnée indiquée dans
+ * le application.properties.
+ * </p>
+ * 
+ * <p>
+ * L'ensemble des attributs de cette classe proviennent d'une demande client.
+ * </p>
+ * 
+ * <p>
+ * Les attributs considérés comme obligatoires à la validation des formulaires
+ * par le client sont annotées @NotBlank
+ * </p>
+ * 
+ * @see RuleNameController
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Entity
 @Table(name = "rulename")
 public class RuleName {
@@ -12,28 +35,27 @@ public class RuleName {
 	@Column(name = "id")
 	private Integer id;
 
-	@NotBlank( message="Name is mandatory")
+	@NotBlank(message = "Name is mandatory")
 	@Column(name = "name")
 	private String name;
 
-	@NotBlank( message="Description is mandatory")
+	@NotBlank(message = "Description is mandatory")
 	@Column(name = "description")
 	private String description;
 
-	@NotBlank( message="Json is mandatory")
+	@NotBlank(message = "Json is mandatory")
 	@Column(name = "json")
 	private String json;
 
-	
-	@NotBlank( message="Template is mandatory")
+	@NotBlank(message = "Template is mandatory")
 	@Column(name = "template")
 	private String template;
 
-	@NotBlank( message="SQL is mandatory")
+	@NotBlank(message = "SQL is mandatory")
 	@Column(name = "sqlstr")
 	private String sqlStr;
 
-	@NotBlank( message="SQLPart is mandatory")
+	@NotBlank(message = "SQLPart is mandatory")
 	@Column(name = "sqlpart")
 	private String sqlPart;
 
@@ -43,12 +65,12 @@ public class RuleName {
 
 	public RuleName(String RuleName, String description, String json, String template, String SQL, String SQLpart) {
 
-		this.name =RuleName;
+		this.name = RuleName;
 		this.description = description;
-		this.json= json;
-		this.template= template;
-		this.sqlStr= SQL;
-		this.sqlPart= SQLpart;
+		this.json = json;
+		this.template = template;
+		this.sqlStr = SQL;
+		this.sqlPart = SQLpart;
 
 	}
 

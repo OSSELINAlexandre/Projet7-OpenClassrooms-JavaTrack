@@ -15,91 +15,198 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+/**
+ * &lt;b&gt;CurveController est le contrôleur en charge du domaine 'CurvePoint'.&lt;/b&gt;
+ * &lt;p&gt;
+ * Les méthodes CRUD sont les suivantes :
+ * &lt;ul&gt;
+ * &lt;li&gt;CREATE : validate.&lt;/li&gt;
+ * &lt;li&gt;READ : home (permettant de voir toutes les instances CurvePoint) &amp;
+ * showUpdateForm (permettant de lire une instance spécifique de
+ * CurvePoint).&lt;/li&gt;
+ * &lt;li&gt;UPDATE : updateCurve.&lt;/li&gt;
+ * &lt;li&gt;DELETE : deleteCurve.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Tous les templates sont entreposés dans les ressources.
+ * &lt;/p&gt;
+ * 
+ * @see CurvePoint
+ * @see CurvePointServices
+ * @see src/resources/templates/curvePoint
+ * 
+ * @author Alexandre Osselin
+ * @version 1.0
+ */
 @Controller
-<span class="fc" id="L19">public class CurveController {</span>
+<span class="fc" id="L43">public class CurveController {</span>
 
-<span class="fc" id="L21">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(CurveController.class);</span>
+<span class="fc" id="L45">	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(CurveController.class);</span>
 
+	/**
+	 * Service lié au contrôleur CurveController.
+	 */
 	@Autowired
-	CurvePointServices curvePointServices;
+	private CurvePointServices curvePointServices;
 
-	
-	//READ
+	/**
+	 * 'home' permet d'exposer au client la liste de l'ensemble des instances de
+	 * 'CurvePoint' ayant eu lieu et enregistrés dans la base de données.
+	 * 
+	 * La méthode permet d'appeler le service pour récupérer depuis la base de
+	 * donnée la liste en question et de l'insérer dans le modèle.
+	 * 
+	 * 
+	 * @param model
+	 * @return curvePoint/list
+	 */
 	@RequestMapping(&quot;/curvePoint/list&quot;)
 	public String home(Model model) {
-<span class="fc" id="L30">		model.addAttribute(&quot;listAllCurvePoint&quot;, curvePointServices.findAllCurvePoints());</span>
+<span class="fc" id="L66">		model.addAttribute(&quot;listAllCurvePoint&quot;, curvePointServices.findAllCurvePoints());</span>
 
-<span class="fc" id="L32">		return &quot;curvePoint/list&quot;;</span>
+<span class="fc" id="L68">		return &quot;curvePoint/list&quot;;</span>
 	}
 
+	/**
+	 * 'addCurveForm' permet d'appeler le formulaire assurant la création d'un
+	 * nouveau 'CurvePoint'.
+	 * 
+	 * @param curve
+	 * @return curvePoint/add
+	 */
 	@GetMapping(&quot;/curvePoint/add&quot;)
-	public String addCurveForm(CurvePoint bid) {
-<span class="fc" id="L37">		return &quot;curvePoint/add&quot;;</span>
+	public String addCurveForm(CurvePoint curve) {
+<span class="fc" id="L80">		return &quot;curvePoint/add&quot;;</span>
 	}
 
-    //CREATE
+	/**
+	 * 'validate' [CREATE] appeler depuis le formulaire d'ajout, permet d'aiguiller
+	 * en fonction d'une erreur ou non vers les pages correspondantes. Ces erreurs
+	 * sont renvoyés directement depuis le template grâces aux méthodes liées aux
+	 * annotations dans le modèle de CurvePoint.
+	 * 
+	 * &lt;P&gt;
+	 * &lt;ul&gt;
+	 * &lt;li&gt;Si une erreur est présente (informations renvoyées directement depuis le
+	 * template) nous retournons la page initiale de création d'un nouveau
+	 * 'CurvePoint' dans lequel les erreurs seront affichées.&lt;/li&gt;
+	 * 
+	 * 
+	 * 
+	 * &lt;li&gt;Si aucune erreur est présente (informations renvoyées directement depuis
+	 * le template),le service enregistre la nouvelle instance et l'aiguilleur
+	 * redirige vers la page de présentation de l'ensemble des 'CurvePoint'.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @see CurvePoint
+	 * @param curvePoint
+	 * @param result
+	 * @param model
+	 * @return redirect:/curvePoint/list
+	 */
 	@PostMapping(&quot;/curvePoint/validate&quot;)
 	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
 
-<span class="fc bfc" id="L44" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (result.hasErrors()) {</span>
 
-<span class="fc" id="L46">			return &quot;curvePoint/add&quot;;</span>
+<span class="fc" id="L115">			return &quot;curvePoint/add&quot;;</span>
 
 		}
 
-		
-<span class="fc" id="L51">		curvePointServices.saveANewCurvedPoint(curvePoint);</span>
+<span class="fc" id="L119">		curvePointServices.saveANewCurvedPoint(curvePoint);</span>
 
-<span class="fc" id="L53">		return &quot;redirect:/curvePoint/list&quot;;</span>
+<span class="fc" id="L121">		return &quot;redirect:/curvePoint/list&quot;;</span>
 	}
 
-    //READ
+	/**
+	 * showUpdateForm appeler depuis la liste des instances de 'CurvePoint' en BDD,
+	 * permet à partir d'un ID d'une instance de CurvePoint, de présenter le
+	 * formulaire de modification de l'instance du curvePoint en question. Cette
+	 * méthode permet d'ajouter au 'model' l'instance spécifique en question grâce
+	 * au service.
+	 * 
+	 * @param id
+	 * @param model
+	 * @return update
+	 */
 	@GetMapping(&quot;/curvePoint/update/{id}&quot;)
 	public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 
-<span class="fc" id="L60">		logger.info(&quot;=========== WTC =============&quot; + id);</span>
-<span class="fc" id="L61">		model.addAttribute(&quot;curvePointToUpdate&quot;, curvePointServices.findSpecificCurvePoint(id));</span>
+<span class="fc" id="L138">		logger.info(&quot;=========== WTC =============&quot; + id);</span>
+<span class="fc" id="L139">		model.addAttribute(&quot;curvePointToUpdate&quot;, curvePointServices.findSpecificCurvePoint(id));</span>
 
-<span class="fc" id="L63">		return &quot;curvePoint/update&quot;;</span>
+<span class="fc" id="L141">		return &quot;curvePoint/update&quot;;</span>
 	}
 
-    //UPDATE
+	/**
+	 * &lt;p&gt;
+	 * updateCurve [UPDATE] permet, depuis une instance valide de CurvePoint, de
+	 * sauvegarder une mise à jour de ladite instance dans la base de donnée.
+	 * &lt;/p&gt;
+	 * &lt;p&gt;
+	 * L'instance de CurvePoint est considérée valable grâce aux méthodes liées aux
+	 * annotations visibles dans le domaine.
+	 * &lt;/p&gt;
+	 * 
+	 * @see CurvePoint
+	 * 
+	 * @param id
+	 * @param curvePoint
+	 * @param result
+	 * @param model
+	 * @return redirect:/curvePoint/list
+	 */
 	@PostMapping(&quot;/curvePoint/update/{id}&quot;)
 	public String updateCurve(@PathVariable(&quot;id&quot;) Integer id, @Valid CurvePoint curvePoint, BindingResult result,
 			Model model) {
 
-		
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (result.hasErrors()) {</span>
-			
-<span class="nc" id="L74">			return &quot;curvePoint/update&quot;;</span>
-			
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (result.hasErrors()) {</span>
+
+<span class="nc" id="L168">			return &quot;curvePoint/update&quot;;</span>
+
 		}
-<span class="fc" id="L77">		curvePoint.setId(id);</span>
-<span class="fc" id="L78">		curvePointServices.updateAGivenCurvePoint(curvePoint);</span>
+<span class="fc" id="L171">		curvePoint.setId(id);</span>
+<span class="fc" id="L172">		curvePointServices.updateAGivenCurvePoint(curvePoint);</span>
 
-
-<span class="fc" id="L81">		return &quot;redirect:/curvePoint/list&quot;;</span>
-
+<span class="fc" id="L174">		return &quot;redirect:/curvePoint/list&quot;;</span>
 
 	}
 
-    //DELETE
+	/**
+	 * &lt;p&gt;
+	 * deleteCurve [DELETE], appeler depuis la liste, permet de supprimer une
+	 * instance de CurvePoint, spécifiée par l'ID, de la base de donnée.
+	 * &lt;/p&gt;
+	 *
+	 * &lt;p&gt;
+	 * Seuls des instances valables sont déjà enregistrés dans la base de donnée et
+	 * afficher dans la liste, ainsi l'instance spécifiée par l'ID et devant être
+	 * supprimé est de ce fait valable.
+	 * &lt;/p&gt;
+	 * 
+	 * 
+	 * @param id
+	 * @param model
+	 * @return redirect:/curvePoint/list
+	 */
 	@GetMapping(&quot;/curvePoint/delete/{id}&quot;)
 	public String deleteCurve(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 
-<span class="fc" id="L90">		curvePointServices.deleteAGivenCurvePoint(id);</span>
+<span class="fc" id="L198">		curvePointServices.deleteAGivenCurvePoint(id);</span>
 
-<span class="fc" id="L92">		return &quot;redirect:/curvePoint/list&quot;;</span>
+<span class="fc" id="L200">		return &quot;redirect:/curvePoint/list&quot;;</span>
 
 	}
-	
-    //SETTER solely needed for testing purposes, can be deleted without incident on code.
+
+	// SETTER solely needed for testing purposes, can be deleted without incident on
+	// code.
 
 	public void setCurvePointServices(CurvePointServices curvePointServices) {
-<span class="fc" id="L99">		this.curvePointServices = curvePointServices;</span>
-<span class="fc" id="L100">	}</span>
-	
-	
-	
+<span class="fc" id="L208">		this.curvePointServices = curvePointServices;</span>
+<span class="fc" id="L209">	}</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
