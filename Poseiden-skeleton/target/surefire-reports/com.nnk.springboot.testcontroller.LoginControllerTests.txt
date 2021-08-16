@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.nnk.springboot.testcontroller.LoginControllerTests
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.418 s - in com.nnk.springboot.testcontroller.LoginControllerTests
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.931 s - in com.nnk.springboot.testcontroller.LoginControllerTests
